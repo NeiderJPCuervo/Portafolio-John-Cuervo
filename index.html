@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>John Neider Cuervo Quintero — Desarrollador de Sistemas</title>
+<meta name="description" content="Portafolio de John Neider Cuervo Quintero, desarrollador de sistemas de gestión, inventario y punto de venta.">
+
+<!-- Open Graph: mejora cómo se ve el link al compartirlo (LinkedIn, WhatsApp, etc.) -->
+<meta property="og:title" content="John Neider Cuervo Quintero — Desarrollador de Sistemas">
+<meta property="og:description" content="Sistemas de gestión de inventario y punto de venta construidos con Python.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="scroll-progress" aria-hidden="true"></div>
+<div id="copy-toast" role="status" aria-live="polite"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="nav-mark"><span class="dot"></span> <span data-nav-shortname></span></a>
+
+    <nav class="links">
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="#habilidades">Habilidades</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#formacion">Formación</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+
+    <a class="btn" href="#contacto">Contactar</a>
+
+    <button id="nav-toggle" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
+      <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <nav id="mobile-menu" class="mobile-menu">
+    <a href="#sobre-mi">Sobre mí</a>
+    <a href="#habilidades">Habilidades</a>
+    <a href="#proyectos">Proyectos</a>
+    <a href="#formacion">Formación</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span id="hero-eyebrow" class="eyebrow"></span>
+        <h1><span id="hero-name-1"></span><br><span id="hero-name-2"></span></h1>
+        <div id="hero-role" class="role"></div>
+        <p id="hero-pitch" class="pitch"></p>
+        <div class="hero-actions">
+          <a id="hero-cta-primary" class="btn primary" href="#proyectos"></a>
+          <a id="hero-cta-secondary" class="btn" href="#contacto"></a>
+        </div>
+      </div>
+
+      <!-- Elemento firma: ficha de "registro" tipo etiqueta de inventario -->
+      <div class="id-card">
+        <div class="id-card-row">
+          <span id="idcard-registro"></span>
+          <span class="status" id="idcard-estado"></span>
+        </div>
+        <div id="idcard-fields"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SOBRE MÍ ================= -->
+  <section id="sobre-mi">
+    <div class="wrap">
+      <p id="about-kicker" class="section-kicker"></p>
+      <h2 id="about-title" class="section-title"></h2>
+
+      <div class="about-grid">
+        <div id="about-paragraphs" class="about-text reveal"></div>
+        <div id="about-facts" class="facts reveal"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= HABILIDADES ================= -->
+  <section id="habilidades">
+    <div class="wrap">
+      <p id="skills-kicker" class="section-kicker"></p>
+      <h2 id="skills-title" class="section-title"></h2>
+      <p id="skills-lede" class="section-lede"></p>
+
+      <div id="skills-groups" class="skills-groups"></div>
+    </div>
+  </section>
+
+  <!-- ================= PROYECTOS ================= -->
+  <section id="proyectos">
+    <div class="wrap">
+      <p id="projects-kicker" class="section-kicker"></p>
+      <h2 id="projects-title" class="section-title"></h2>
+      <p id="projects-lede" class="section-lede"></p>
+
+      <div id="project-filters" class="project-filters"></div>
+      <div id="projects-list" class="projects"></div>
+    </div>
+  </section>
+
+  <!-- ================= CERTIFICACIONES / ESTUDIOS ================= -->
+  <section id="formacion">
+    <div class="wrap">
+      <p id="formacion-kicker" class="section-kicker"></p>
+      <h2 id="formacion-title" class="section-title"></h2>
+      <p id="formacion-lede" class="section-lede"></p>
+
+      <div id="formacion-list" class="cert-list reveal"></div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACTO ================= -->
+  <section id="contacto">
+    <div class="wrap">
+      <div class="contact-card reveal">
+        <div>
+          <h2 id="contact-title"></h2>
+          <p id="contact-text"></p>
+        </div>
+        <div id="contact-links" class="contact-links"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<button id="back-to-top" aria-label="Volver arriba">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+</button>
+
+<footer>
+  <span id="footer-text"></span>
+</footer>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
