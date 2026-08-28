@@ -27,8 +27,8 @@ window.PORTFOLIO_DATA = {
     eyebrow: "Ficha de perfil · Disponible para nuevas oportunidades",
     nameLine1: "John Neider",
     nameLine2: "Cuervo Quintero",
-    role: "Desarrollador de sistemas de gestión & inventario",
-    pitch: "Diseño y construyo software que le pone orden a la operación: desde el control de materia prima que entra y sale de una bodega, hasta el punto de venta que un vendedor usa todos los días. Me interesa que cada proceso quede registrado, trazable y sin margen para que algo se pierda.",
+    role: "Estudiante de Ingeniería de Software y Datos",
+    pitch: "Estoy formándome en Ingeniería de Software y Datos y complemento mi formación construyendo sistemas reales: control de inventario, punto de venta y aplicaciones web. Me caracterizo por aprender con facilidad lo que un proyecto requiera y por trabajar en equipo para llegar a las mejores decisiones técnicas.",
     primaryCta: { label: "Ver proyectos", href: "#proyectos" },
     secondaryCta: { label: "Escribirme", href: "#contacto" },
 
@@ -37,10 +37,10 @@ window.PORTFOLIO_DATA = {
       registro: "REGISTRO N.º JNCQ-2026",
       estado: "Disponible",
       campos: [
-        { k: "Rol", v: "Desarrollador de software" },
-        { k: "Enfoque", v: "Sistemas de inventario & POS" },
-        { k: "Stack principal", v: "Python · SQL · PyQt6 · Tkinter" },
-        { k: "Proyectos activos", v: "2 sistemas en producción" },
+        { k: "Rol", v: "Estudiante de Ingeniería de Software y Datos" },
+        { k: "Enfoque", v: "Desarrollo de software & gestión de datos" },
+        { k: "Stack principal", v: "Python · SQL · HTML/CSS/JS · PyQt6" },
+        { k: "Proyectos activos", v: "3 proyectos en portafolio" },
         { k: "Ubicación", v: "Colombia (remoto o híbrido)" }
       ]
     }
@@ -49,18 +49,17 @@ window.PORTFOLIO_DATA = {
   /* -------------------- 2. SOBRE MÍ -------------------- */
   about: {
     kicker: "01 · Sobre mí",
-    title: "De la bodega al código",
     paragraphs: [
-      "Soy John Neider Cuervo Quintero, desarrollador enfocado en construir herramientas que resuelven problemas reales de operación: inventarios que cuadran, ventas que quedan registradas y equipos que dejan de perseguir información en cuadernos o Excel sueltos.",
-      "Mi trabajo nace de la práctica: empecé automatizando el control de materia prima en la empresa donde trabajo y de ahí pasé a construir un sistema completo de punto de venta para una ferretería, pensando siempre en cómo lo va a usar la persona detrás del mostrador, no solo en cómo se ve el código por dentro.",
-      "Me gusta el software de escritorio y los sistemas con roles y permisos claros: quién puede ver qué, quién puede vender y quién administra. Ese orden es, en el fondo, la misma idea que aplico a cualquier proyecto en el que trabajo."
+      "Soy John Neider Cuervo Quintero,Me encuentro en una etapa de formación en la que combino los fundamentos teóricos de mi carrera con la construcción de proyectos reales, con el propósito de consolidar buenas prácticas de desarrollo  en las áreas de software y gestión de datos.",
+      "Me caracterizo por tener disposición y facilidad para aprender cualquier tecnología o herramienta que un proyecto requiera, así como por un fuerte enfoque en el trabajo en equipo, entendiendo que las mejores soluciones de software surgen del intercambio de ideas y de decisiones tomadas de manera colaborativa.",
+      "He aplicado estos principios en proyectos como un sistema de control de inventario, un punto de venta para una ferretería y una aplicación web interactiva, buscando siempre que la solución sea funcional, ordenada y agradable de usar para la persona que está al otro lado de la pantalla."
     ],
     // Tarjetas de datos destacados (grid 2x2)
     facts: [
-      { num: "02", label: "Sistemas de gestión construidos de principio a fin" },
-      { num: "2",  label: "Interfaces gráficas dominadas: Tkinter y PyQt6" },
+      { num: "03", label: "Proyectos construidos de principio a fin" },
+      { num: "3",  label: "Tecnologías principales: Python, SQL y JavaScript" },
       { num: "6",  label: "Módulos integrados en un solo sistema (POS ferretería)" },
-      { num: "100%", label: "Enfoque en trazabilidad: nada entra o sale sin quedar registrado" }
+      { num: "100%", label: "Disposición para aprender y trabajar en equipo" }
     ]
   },
 
@@ -100,7 +99,8 @@ window.PORTFOLIO_DATA = {
     filters: [
       { id: "all", label: "Todos" },
       { id: "inventario", label: "Inventario" },
-      { id: "pos", label: "Punto de venta" }
+      { id: "pos", label: "Punto de venta" },
+      { id: "web", label: "Web" }
     ],
 
     items: [
@@ -153,10 +153,32 @@ window.PORTFOLIO_DATA = {
           { type: "admin",  label: "admin → acceso completo a todos los módulos" },
           { type: "vendor", label: "vendedor → ventas + inventario (lectura)" }
         ],
-        link: null // ej: "https://github.com/tu-usuario/pos-ferreteria"
+        link: "https://github.com/NeiderJPCuervo/Sistema-de-Inventario-Ferre.git"
+      },
+      {
+        code: "WEB-003 / APLICACIÓN WEB",
+        name: "Amigo Secreto",
+        status: "Finalizado",
+        category: "web",
+        description: [
+          "Aplicación web diseñada para realizar sorteos rápidos o dinámicas como el \"Amigo Secreto\". Permite a los usuarios registrar nombres de forma iterativa, visualizarlos en tiempo real y ejecutar un motor de selección aleatoria para escoger un ganador.",
+          "El desarrollo se centró en garantizar una experiencia de usuario fluida y sin errores de entrada, validando cada nombre antes de agregarlo a la lista y ofreciendo una interfaz simple, clara e inmediata."
+        ],
+        stack: "HTML · CSS · JavaScript",
+        table: {
+          headLeft: "Función",
+          headRight: "Detalle",
+          rows: [
+            { icon: "📝", name: "Registro iterativo de nombres", value: "Validado" },
+            { icon: "👀", name: "Visualización en tiempo real", value: "Lista dinámica" },
+            { icon: "🎲", name: "Motor de selección aleatoria", value: "Un ganador" }
+          ]
+        },
+        roles: null,
+        link: "https://github.com/NeiderJPCuervo/juego-del-amigo-secreto.git"
       }
 
-      /* Para agregar un tercer proyecto, copia un bloque { ... } completo
+      /* Para agregar otro proyecto, copia un bloque { ... } completo
          de arriba, pégalo aquí (con una coma antes) y edita sus valores. */
     ]
   },
@@ -168,24 +190,11 @@ window.PORTFOLIO_DATA = {
     lede: "Edita esta lista con tu formación real: programas, cursos y certificaciones. Deja el nombre exacto de la institución tal como aparece en tu certificado.",
     items: [
       {
-        year: "2023 — 2025",
-        name: "[ Nombre de tu programa de estudios ]",
-        org: "[ Institución — ej. SENA, universidad, academia ]",
-        tag: "En curso / Finalizado"
+        year: "2024 — 2026",
+        name: "[ La Institución Universitaria Digital de Antioquia  ]",
+        org: "[ IU Digital de Antioquia]",
+        tag: "En curso"
       },
-      {
-        year: "2024",
-        name: "[ Nombre de la certificación, ej. Python Intermedio ]",
-        org: "[ Plataforma o institución ]",
-        tag: "Certificado"
-      },
-      {
-        year: "2024",
-        name: "[ Curso de bases de datos / SQL ]",
-        org: "[ Plataforma o institución ]",
-        tag: "Certificado"
-      }
-      /* Copia un bloque { ... } para agregar más certificaciones. */
     ]
   },
 
@@ -194,11 +203,11 @@ window.PORTFOLIO_DATA = {
     title: "Hablemos de tu próximo sistema",
     text: "Si buscas a alguien que le dé orden y trazabilidad a la operación de tu equipo, con gusto conversamos. Respondo rápido.",
     // El botón de correo tiene copiado al portapapeles automático (ver script.js)
-    email: "tu-correo@ejemplo.com",
-    linkedin: { label: "/in/tu-usuario", url: "https://www.linkedin.com/in/tu-usuario" },
-    github: { label: "/tu-usuario", url: "https://github.com/tu-usuario" },
-    phoneDisplay: "+57 XXX XXX XXXX",
-    phoneHref: "+57XXXXXXXXXX"
+    email: "jhonlds155@gmail.com", // TODO: reemplaza por tu correo real
+    linkedin: { label: "/in/john-neider-cuervo-quintero", url: "https://www.linkedin.com/in/john-neider-cuervo-quintero/" },
+    github: { label: "/NeiderJPCuervo", url: "https://github.com/NeiderJPCuervo" },
+    phoneDisplay: "+57 322 681 6736",
+    phoneHref: "+573226816736"
   },
 
   /* -------------------- 7. PIE DE PÁGINA -------------------- */

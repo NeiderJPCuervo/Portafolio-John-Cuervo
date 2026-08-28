@@ -4,20 +4,20 @@
      tinta verde-carbón, ámbar de etiqueta y verde "en stock".
   ========================================================= */
   :root{
-    --bg: #F7F5F0;
-    --surface: #FFFFFF;
-    --surface-2: #F1EEE6;
-    --ink: #1F2A24;
-    --ink-soft: #5B665F;
-    --ink-faint: #8B9389;
-    --accent: #C97A3D;     /* ámbar etiqueta */
-    --accent-ink: #7A481F;
-    --accent-2: #3D6B5C;   /* verde "en stock" */
-    --accent-2-soft: #E4EEE9;
-    --accent-soft: #F3E4D3;
-    --line: #E2DDD1;
-    --line-strong: #CFC8B8;
-    --danger: #B0503A;
+    --bg: #EAF5FF;
+    --surface: #F7FBFF;
+    --surface-2: #E6F1FF;
+    --ink: #123C69;
+    --ink-soft: #3F678F;
+    --ink-faint: #6B8FB2;
+    --accent: #4A8EF7;
+    --accent-ink: #123C69;
+    --accent-2: #1D6BCE;
+    --accent-2-soft: #E2F0FF;
+    --accent-soft: #D7EAFE;
+    --line: #CFE3FF;
+    --line-strong: #B7D5FF;
+    --danger: #7EA8DB;
 
     --font-display: 'Space Grotesk', sans-serif;
     --font-body: 'Inter', sans-serif;
@@ -82,7 +82,7 @@
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(247,245,240,0.86);
+    background: rgba(234,245,255,0.82);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--line);
   }
@@ -144,17 +144,20 @@
     text-decoration:none;
     padding: 10px 16px;
     border-radius: var(--radius-s);
-    border: 1px solid var(--ink);
-    color: var(--ink);
-    transition: transform .18s ease, background .18s ease, color .18s ease;
+    border: 1px solid var(--accent-2);
+    color: var(--accent-ink);
+    background: rgba(255,255,255,0.55);
+    transition: transform .18s ease, background .18s ease, color .18s ease, box-shadow .18s ease;
     white-space: nowrap;
+    box-shadow: 0 8px 20px -18px rgba(18,60,105,0.8);
   }
-  .btn:hover{ background: var(--ink); color: var(--bg); transform: translateY(-1px); }
+  .btn:hover{ background: var(--accent); color: #ffffff; transform: translateY(-1px); border-color: var(--accent); }
   .btn.primary{
-    background: var(--ink);
-    color: var(--bg);
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    border-color: var(--accent-2);
+    color: #ffffff;
   }
-  .btn.primary:hover{ background: var(--accent-ink); border-color: var(--accent-ink); }
+  .btn.primary:hover{ background: linear-gradient(135deg, var(--accent-2) 0%, var(--accent) 100%); border-color: var(--accent-2); }
 
   main{ position: relative; z-index: 1; }
   section{ padding: 96px 0; }
@@ -550,8 +553,8 @@
 
   /* ============ CONTACTO ============ */
   .contact-card{
-    background: var(--ink);
-    color: var(--bg);
+    background: linear-gradient(135deg, #0d2d57 0%, #1e5ea7 100%);
+    color: #F3F9FF;
     border-radius: var(--radius-m);
     padding: 56px;
     display:grid;
@@ -560,17 +563,19 @@
     align-items: center;
     position: relative;
     overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.18);
+    box-shadow: 0 18px 40px -28px rgba(13,45,87,0.7);
   }
   .contact-card::after{
     content:"";
     position:absolute;
     right: -60px; top: -60px;
     width: 220px; height: 220px;
-    border: 40px solid rgba(255,255,255,0.04);
+    border: 40px solid rgba(255,255,255,0.08);
     border-radius: 50%;
   }
-  .contact-card h2{ color: var(--bg); font-size: clamp(26px,3vw,34px); }
-  .contact-card p{ color: rgba(247,245,240,0.7); margin-top: 12px; max-width: 42ch; }
+  .contact-card h2{ color: #F3F9FF; font-size: clamp(26px,3vw,34px); }
+  .contact-card p{ color: rgba(243,249,255,0.8); margin-top: 12px; max-width: 42ch; }
   .contact-links{
     display:flex;
     flex-direction: column;
@@ -580,19 +585,20 @@
   }
   .contact-links a{
     text-decoration:none;
-    color: var(--bg);
+    color: #F3F9FF;
     display:flex;
     justify-content: space-between;
     padding: 14px 16px;
-    border: 1px solid rgba(247,245,240,0.18);
+    border: 1px solid rgba(255,255,255,0.18);
     border-radius: var(--radius-s);
-    transition: background .2s ease, border-color .2s ease;
+    transition: background .2s ease, border-color .2s ease, transform .2s ease;
   }
   .contact-links a:hover{
-    background: rgba(247,245,240,0.08);
-    border-color: rgba(247,245,240,0.4);
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.36);
+    transform: translateX(3px);
   }
-  .contact-links a span.arrow{ color: var(--accent); }
+  .contact-links a span.arrow{ color: #CFE3FF; }
 
   footer{
     padding: 32px 0 48px;
