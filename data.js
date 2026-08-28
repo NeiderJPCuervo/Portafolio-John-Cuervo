@@ -1,17 +1,4 @@
-/* =====================================================================
-   DATA.JS — TODO EL CONTENIDO DEL PORTAFOLIO
-   =====================================================================
-   Este es el ÚNICO archivo que necesitas editar para actualizar tu
-   información. No toques index.html ni style.css a menos que quieras
-   cambiar el diseño.
 
-   Reglas rápidas:
-   - Los textos van entre comillas "..." o '...'
-   - Si necesitas una comilla dentro del texto, escríbela como \"
-   - No borres las comas "," entre elementos
-   - Puedes agregar o quitar elementos de una lista copiando/borrando
-     un bloque { ... } completo (incluyendo la coma que lo separa)
-   ===================================================================== */
 
 window.PORTFOLIO_DATA = {
 
@@ -34,14 +21,13 @@ window.PORTFOLIO_DATA = {
 
     // Ficha lateral tipo "registro de inventario"
     idCard: {
-      registro: "REGISTRO N.º JNCQ-2026",
       estado: "Disponible",
       campos: [
         { k: "Rol", v: "Estudiante de Ingeniería de Software y Datos" },
         { k: "Enfoque", v: "Desarrollo de software & gestión de datos" },
         { k: "Stack principal", v: "Python · SQL · HTML/CSS/JS · PyQt6" },
         { k: "Proyectos activos", v: "3 proyectos en portafolio" },
-        { k: "Ubicación", v: "Colombia (remoto o híbrido)" }
+        { k: "Ubicación", v: "Medellin, Antioquia" }
       ]
     }
   },
