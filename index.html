@@ -3,50 +3,84 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>John Neider Cuervo Quintero — Desarrollador de Sistemas</title>
-<meta name="description" content="Portafolio de John Neider Cuervo Quintero, desarrollador de sistemas de gestión, inventario y punto de venta.">
+<title>John Neider Cuervo Quintero — Desarrollador de software y datos</title>
+<meta name="description" content="Portafolio de John Neider Cuervo Quintero: estudiante de Ingeniería de Software y Datos en Medellín. Sistemas de inventario, punto de venta y dashboards de datos industriales.">
+<meta name="theme-color" content="#0B0F14">
+<link rel="canonical" href="https://portafolio-john-cuervo.netlify.app/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 
-<!-- Open Graph: mejora cómo se ve el link al compartirlo (LinkedIn, WhatsApp, etc.) -->
-<meta property="og:title" content="John Neider Cuervo Quintero — Desarrollador de Sistemas">
-<meta property="og:description" content="Sistemas de gestión de inventario y punto de venta construidos con Python.">
+<!-- Open Graph: cómo se ve el link al compartirlo (LinkedIn, WhatsApp, etc.) -->
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://portafolio-john-cuervo.netlify.app/">
+<meta property="og:title" content="John Neider Cuervo Quintero — Desarrollador de software y datos">
+<meta property="og:description" content="Sistemas de inventario y punto de venta en Python, y dashboards de datos industriales en React. Disponible para prácticas y roles junior.">
+<meta property="og:image" content="https://portafolio-john-cuervo.netlify.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="es_CO">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "John Neider Cuervo Quintero",
+  "jobTitle": "Desarrollador de software y datos",
+  "url": "https://portafolio-john-cuervo.netlify.app/",
+  "address": { "@type": "PostalAddress", "addressLocality": "Medellín", "addressCountry": "CO" },
+  "alumniOf": "Institución Universitaria Digital de Antioquia",
+  "sameAs": [
+    "https://github.com/NeiderJPCuervo",
+    "https://www.linkedin.com/in/john-neider-cuervo-quintero/"
+  ]
+}
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<a class="skip-link" href="#proyectos">Saltar a los proyectos</a>
 <div id="scroll-progress" aria-hidden="true"></div>
-<div id="copy-toast" role="status" aria-live="polite"></div>
+<div id="toast" role="status" aria-live="polite"></div>
 
 <header class="nav">
   <div class="nav-inner">
-    <a href="#top" class="nav-mark"><span class="dot"></span> <span data-nav-shortname></span></a>
+    <a href="#top" class="nav-mark" aria-label="Inicio">
+      <span class="nav-monogram" aria-hidden="true">JC</span>
+      <span data-nav-name>John Cuervo</span>
+    </a>
 
-    <nav class="links">
+    <nav class="links" aria-label="Secciones">
+      <a href="#proyectos">Proyectos</a>
       <a href="#sobre-mi">Sobre mí</a>
       <a href="#habilidades">Habilidades</a>
-      <a href="#proyectos">Proyectos</a>
-      <a href="#formacion">Formación</a>
+      <a href="#trayectoria">Trayectoria</a>
       <a href="#contacto">Contacto</a>
     </nav>
 
-    <a class="btn" href="#contacto">Contactar</a>
-
-    <button id="nav-toggle" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
-      <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
+    <div class="nav-actions">
+      <a id="nav-cv" class="btn btn-sm" href="#" download hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14"/></svg>
+        CV
+      </a>
+      <a class="btn btn-sm primary nav-contact" href="#contacto">Contactar</a>
+      <button id="nav-toggle" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
+        <svg class="icon-menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        <svg class="icon-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
   </div>
 
-  <nav id="mobile-menu" class="mobile-menu">
+  <nav id="mobile-menu" class="mobile-menu" aria-label="Secciones">
+    <a href="#proyectos">Proyectos</a>
     <a href="#sobre-mi">Sobre mí</a>
     <a href="#habilidades">Habilidades</a>
-    <a href="#proyectos">Proyectos</a>
-    <a href="#formacion">Formación</a>
+    <a href="#trayectoria">Trayectoria</a>
     <a href="#contacto">Contacto</a>
   </nav>
 </header>
@@ -54,97 +88,102 @@
 <main id="top">
 
   <!-- ================= HERO ================= -->
-  <section class="hero">
+  <section class="hero" aria-labelledby="hero-name">
     <div class="wrap hero-grid">
-      <div>
-        <span id="hero-eyebrow" class="eyebrow"></span>
-        <h1><span id="hero-name-1"></span><br><span id="hero-name-2"></span></h1>
-        <div id="hero-role" class="role"></div>
-        <p id="hero-pitch" class="pitch"></p>
-        <div class="hero-actions">
-          <a id="hero-cta-primary" class="btn primary" href="#proyectos"></a>
-          <a id="hero-cta-secondary" class="btn" href="#contacto"></a>
-        </div>
+      <div class="hero-copy">
+        <span id="hero-availability" class="availability"></span>
+        <h1 id="hero-name"><span id="hero-name-1">John Neider</span> <span id="hero-name-2">Cuervo Quintero</span></h1>
+        <p id="hero-headline" class="headline"></p>
+        <p id="hero-role" class="role-line"></p>
+        <div id="hero-actions" class="hero-actions"></div>
       </div>
 
       <!-- Elemento firma: ficha de "registro" tipo etiqueta de inventario -->
-      <div class="id-card">
-        <div class="id-card-row">
-          <span id="idcard-registro"></span>
-          <span class="status" id="idcard-estado"></span>
+      <aside class="id-card" aria-label="Ficha de perfil">
+        <div class="id-card-top">
+          <div id="idcard-avatar" class="avatar"></div>
+          <div>
+            <div id="idcard-name" class="id-name"></div>
+            <span id="idcard-estado" class="status-dot"></span>
+          </div>
         </div>
-        <div id="idcard-fields"></div>
-      </div>
+        <dl id="idcard-fields" class="id-fields"></dl>
+        <div class="id-card-foot">
+          <span id="idcard-code"></span>
+          <span class="barcode" aria-hidden="true"></span>
+        </div>
+      </aside>
+    </div>
+
+    <div class="wrap">
+      <ul id="highlights" class="highlights" aria-label="Datos destacados"></ul>
+    </div>
+  </section>
+
+  <!-- ================= PROYECTOS ================= -->
+  <section id="proyectos" aria-labelledby="projects-title">
+    <div class="wrap">
+      <header class="section-head">
+        <p id="projects-kicker" class="section-kicker"></p>
+        <h2 id="projects-title" class="section-title"></h2>
+        <p id="projects-lede" class="section-lede"></p>
+      </header>
+
+      <div id="project-filters" class="project-filters" role="group" aria-label="Filtrar proyectos"></div>
+      <div id="projects-featured" class="projects-featured"></div>
+
+      <h3 id="more-title" class="more-title">Más proyectos</h3>
+      <div id="projects-more" class="projects-more"></div>
+      <p id="projects-empty" class="projects-empty" hidden>No hay proyectos en esta categoría todavía.</p>
     </div>
   </section>
 
   <!-- ================= SOBRE MÍ ================= -->
-  <section id="sobre-mi">
-    <div class="wrap">
-      <p id="about-kicker" class="section-kicker"></p>
-      <h2 id="about-title" class="section-title"></h2>
-
-      <div class="about-grid">
-        <div class="about-photo-col reveal">
-          <div class="about-photo-frame">
-            <img src="assets/john-cuervo.jpg" alt="Foto de John Neider Cuervo Quintero" loading="lazy" width="480" height="480">
-            <span class="about-photo-status" title="Disponible"></span>
-          </div>
-          <div class="about-photo-caption">
-            <span class="about-photo-name">John Neider Cuervo Quintero</span>
-            <span class="about-photo-tag">@NeiderJPCuervo</span>
-          </div>
-        </div>
-
-        <div class="about-main">
-          <div id="about-paragraphs" class="about-text reveal"></div>
-          <div id="about-facts" class="facts reveal"></div>
-        </div>
+  <section id="sobre-mi" aria-labelledby="about-title">
+    <div class="wrap about-grid">
+      <div class="reveal">
+        <p id="about-kicker" class="section-kicker"></p>
+        <h2 id="about-title" class="section-title"></h2>
+        <div id="about-paragraphs" class="about-text"></div>
+      </div>
+      <div class="principles reveal">
+        <h3 id="principles-title"></h3>
+        <ol id="principles-list"></ol>
       </div>
     </div>
   </section>
 
   <!-- ================= HABILIDADES ================= -->
-  <section id="habilidades">
+  <section id="habilidades" aria-labelledby="skills-title">
     <div class="wrap">
-      <p id="skills-kicker" class="section-kicker"></p>
-      <h2 id="skills-title" class="section-title"></h2>
-      <p id="skills-lede" class="section-lede"></p>
-
+      <header class="section-head">
+        <p id="skills-kicker" class="section-kicker"></p>
+        <h2 id="skills-title" class="section-title"></h2>
+        <p id="skills-lede" class="section-lede"></p>
+      </header>
       <div id="skills-groups" class="skills-groups"></div>
     </div>
   </section>
 
-  <!-- ================= PROYECTOS ================= -->
-  <section id="proyectos">
+  <!-- ================= TRAYECTORIA ================= -->
+  <section id="trayectoria" aria-labelledby="trayectoria-title">
     <div class="wrap">
-      <p id="projects-kicker" class="section-kicker"></p>
-      <h2 id="projects-title" class="section-title"></h2>
-      <p id="projects-lede" class="section-lede"></p>
-
-      <div id="project-filters" class="project-filters"></div>
-      <div id="projects-list" class="projects"></div>
-    </div>
-  </section>
-
-  <!-- ================= CERTIFICACIONES / ESTUDIOS ================= -->
-  <section id="formacion">
-    <div class="wrap">
-      <p id="formacion-kicker" class="section-kicker"></p>
-      <h2 id="formacion-title" class="section-title"></h2>
-      <p id="formacion-lede" class="section-lede"></p>
-
-      <div id="formacion-list" class="cert-list reveal"></div>
+      <header class="section-head">
+        <p id="trayectoria-kicker" class="section-kicker"></p>
+        <h2 id="trayectoria-title" class="section-title"></h2>
+      </header>
+      <div id="trayectoria-cols" class="timeline-cols reveal"></div>
     </div>
   </section>
 
   <!-- ================= CONTACTO ================= -->
-  <section id="contacto">
+  <section id="contacto" aria-labelledby="contact-title">
     <div class="wrap">
       <div class="contact-card reveal">
         <div>
           <h2 id="contact-title"></h2>
           <p id="contact-text"></p>
+          <div id="contact-actions" class="contact-actions"></div>
         </div>
         <div id="contact-links" class="contact-links"></div>
       </div>
@@ -153,13 +192,28 @@
 
 </main>
 
+<footer>
+  <div class="wrap footer-inner">
+    <span id="footer-copy"></span>
+    <span id="footer-made"></span>
+  </div>
+</footer>
+
 <button id="back-to-top" aria-label="Volver arriba">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-7 7 7-7 7 7"/></svg>
 </button>
 
-<footer>
-  <span id="footer-text"></span>
-</footer>
+<dialog id="lightbox" aria-label="Captura ampliada">
+  <button class="lightbox-close" aria-label="Cerrar">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+  <img id="lightbox-img" alt="">
+  <p id="lightbox-caption"></p>
+</dialog>
+
+<noscript>
+  <p class="noscript">Este portafolio necesita JavaScript para mostrar su contenido. Puedes ver mis proyectos en <a href="https://github.com/NeiderJPCuervo">github.com/NeiderJPCuervo</a>.</p>
+</noscript>
 
 <script src="data.js"></script>
 <script src="script.js"></script>

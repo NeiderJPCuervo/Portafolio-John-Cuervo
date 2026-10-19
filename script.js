@@ -14,259 +14,412 @@
     return;
   }
 
+  document.documentElement.classList.add("js");
+
   /* ---------------------------------------------------------------
-     Utilidad: crea HTML seguro escapando texto plano por defecto.
-     Úsala para cualquier texto que venga de data.js.
+     Utilidades
   --------------------------------------------------------------- */
+  // Escapa texto plano para insertarlo en HTML o en atributos.
   const esc = (str) =>
-    String(str)
+    String(str ?? "")
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+
+  const $ = (id) => document.getElementById(id);
+  const list = (arr, fn) => (arr || []).map(fn).join("");
+
+  // Íconos SVG (trazos heredan el color del texto)
+  const ICONS = {
+    github:
+      '<svg viewBox="0 0 24 24" aria-hidden="true" class="fill"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.4-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>',
+    linkedin:
+      '<svg viewBox="0 0 24 24" aria-hidden="true" class="fill"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>',
+    mail: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>',
+    phone:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>',
+    copy: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+    download: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14"/></svg>',
+    external: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>',
+    arrow: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>',
+    lock: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>',
+    expand: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>'
+  };
 
   /* =========================== META / SEO =========================== */
   function renderMeta() {
     document.title = D.meta.siteTitle;
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) metaDesc.setAttribute("content", D.meta.siteDescription);
-    document.querySelectorAll("[data-nav-shortname]").forEach((el) => {
-      el.textContent = D.meta.navShortName;
+    document.querySelectorAll("[data-nav-name]").forEach((el) => {
+      el.textContent = D.meta.navName;
     });
+
+    const navCv = $("nav-cv");
+    if (D.hero.cv && navCv) {
+      navCv.href = D.hero.cv;
+      navCv.hidden = false;
+    }
   }
 
   /* =========================== HERO =========================== */
   function renderHero() {
     const h = D.hero;
-    document.getElementById("hero-eyebrow").textContent = h.eyebrow;
-    document.getElementById("hero-name-1").textContent = h.nameLine1;
-    document.getElementById("hero-name-2").textContent = h.nameLine2;
-    document.getElementById("hero-role").textContent = h.role;
-    document.getElementById("hero-pitch").textContent = h.pitch;
+    const c = D.contact;
+    $("hero-availability").textContent = h.availability;
+    $("hero-name-1").textContent = h.nameLine1;
+    $("hero-name-2").textContent = h.nameLine2;
+    $("hero-headline").textContent = h.headline;
+    $("hero-role").textContent = h.roleLine;
 
-    const primary = document.getElementById("hero-cta-primary");
-    primary.textContent = h.primaryCta.label;
-    primary.href = h.primaryCta.href;
+    const cvBtn = h.cv
+      ? `<a class="btn" href="${esc(h.cv)}" download>${ICONS.download} Descargar CV</a>`
+      : `<a class="btn" href="${esc(h.secondaryCta.href)}">${esc(h.secondaryCta.label)}</a>`;
 
-    const secondary = document.getElementById("hero-cta-secondary");
-    secondary.textContent = h.secondaryCta.label;
-    secondary.href = h.secondaryCta.href;
+    $("hero-actions").innerHTML = `
+      <a class="btn primary" href="${esc(h.primaryCta.href)}">${esc(h.primaryCta.label)} ${ICONS.arrow}</a>
+      ${cvBtn}
+      <span class="icon-links">
+        <a class="icon-btn" href="${esc(c.github.url)}" target="_blank" rel="noopener" aria-label="GitHub">${ICONS.github}</a>
+        <a class="icon-btn" href="${esc(c.linkedin.url)}" target="_blank" rel="noopener" aria-label="LinkedIn">${ICONS.linkedin}</a>
+        <a class="icon-btn" href="mailto:${esc(c.email)}" aria-label="Correo">${ICONS.mail}</a>
+      </span>`;
 
-    document.getElementById("idcard-registro").textContent = h.idCard.registro;
-    document.getElementById("idcard-estado").textContent = h.idCard.estado;
+    // Ficha lateral
+    const initials = (h.nameLine1.charAt(0) + h.nameLine2.charAt(0)).toUpperCase();
+    $("idcard-avatar").innerHTML = h.photo
+      ? `<img src="${esc(h.photo)}" alt="Foto de ${esc(h.nameLine1)} ${esc(h.nameLine2)}" width="64" height="64">`
+      : `<span>${esc(initials)}</span>`;
+    $("idcard-name").textContent = `${h.nameLine1} ${h.nameLine2}`;
+    $("idcard-estado").textContent = h.idCard.estado;
+    $("idcard-code").textContent = h.idCard.code;
+    $("idcard-fields").innerHTML = list(
+      h.idCard.campos,
+      (f) => `<div class="id-field"><dt>${esc(f.k)}</dt><dd>${esc(f.v)}</dd></div>`
+    );
 
-    const fieldsWrap = document.getElementById("idcard-fields");
-    fieldsWrap.innerHTML = h.idCard.campos
-      .map(
-        (f) => `
-        <div class="id-field">
-          <span class="k">${esc(f.k)}</span>
-          <span class="v">${esc(f.v)}</span>
-        </div>`
-      )
-      .join("");
+    $("highlights").innerHTML = list(
+      D.highlights,
+      (x) => `<li><span class="num">${esc(x.num)}</span><span class="label">${esc(x.label)}</span></li>`
+    );
+  }
+
+  /* =========================== PROYECTOS =========================== */
+  // Barra superior de "ventana" que enmarca capturas y tablas
+  const frameBar = (title) => `
+    <div class="frame-bar" aria-hidden="true">
+      <span class="dots"><i></i><i></i><i></i></span>
+      <span class="frame-title">${esc(title)}</span>
+    </div>`;
+
+  const statusPill = (s) => `<span class="status tone-${esc(s.tone)}">${esc(s.label)}</span>`;
+
+  const stackList = (items) => `<ul class="stack" aria-label="Tecnologías">${list(items, (t) => `<li>${esc(t)}</li>`)}</ul>`;
+
+  function projectLinks(links, note) {
+    const parts = [];
+    if (links && links.code) {
+      parts.push(`<a class="btn btn-sm" href="${esc(links.code)}" target="_blank" rel="noopener">${ICONS.github} Ver código</a>`);
+    }
+    if (links && links.demo) {
+      parts.push(`<a class="btn btn-sm primary" href="${esc(links.demo)}" target="_blank" rel="noopener">${ICONS.external} Ver demo</a>`);
+    }
+    if (note) {
+      parts.push(`<span class="project-note">${ICONS.lock} ${esc(note)}</span>`);
+    }
+    return parts.length ? `<div class="project-links">${parts.join("")}</div>` : "";
+  }
+
+  // Captura clicable que se abre en el visor ampliado
+  const shot = (img, title) => `
+    <button type="button" class="frame shot" data-lightbox="${esc(img.src)}" data-alt="${esc(img.alt)}" aria-label="Ampliar captura: ${esc(title)}">
+      ${frameBar(img.frameTitle || img.title || title)}
+      <img src="${esc(img.src)}" alt="${esc(img.alt)}" width="${esc(img.width)}" height="${esc(img.height)}" loading="lazy" decoding="async">
+      <span class="shot-hint">${ICONS.expand} Ampliar</span>
+    </button>`;
+
+  function moduleTable(t, roles) {
+    const roleLine = roles
+      ? `<div class="roles-line">${list(roles, (r) => `<span class="role-pill ${esc(r.type)}">${esc(r.label)}</span>`)}</div>`
+      : "";
+    return `
+      <div class="frame">
+        ${frameBar(t.frameTitle)}
+        <div class="module-table">
+          <div class="mt-head"><span>${esc(t.headLeft)}</span><span>${esc(t.headRight)}</span></div>
+          ${list(
+            t.rows,
+            (row) => `
+            <div class="module-row">
+              <span class="mod-name"><span aria-hidden="true">${esc(row.icon)}</span> ${esc(row.name)}</span>
+              <span class="mod-access">${esc(row.value)}</span>
+            </div>`
+          )}
+        </div>
+        ${roleLine}
+      </div>`;
+  }
+
+  function renderFeatured(proj) {
+    const visual = proj.image ? shot(proj.image, proj.name) : proj.table ? moduleTable(proj.table, proj.roles) : "";
+    const decisions = proj.decisions && proj.decisions.length
+      ? `<div class="decisions">
+           <h4>Decisiones técnicas</h4>
+           <ul>${list(proj.decisions, (d) => `<li>${esc(d)}</li>`)}</ul>
+         </div>`
+      : "";
+
+    return `
+      <article class="project-card reveal" data-categories="${esc(proj.categories.join(" "))}">
+        <div class="project-visual">
+          ${visual}
+          ${decisions}
+        </div>
+        <div class="project-content">
+          <div class="project-meta">
+            <span class="project-code">${esc(proj.code)} · ${esc(proj.type)}</span>
+            ${statusPill(proj.status)}
+          </div>
+          <h3>${esc(proj.name)}</h3>
+          <p class="project-summary">${esc(proj.summary)}</p>
+          <dl class="case">
+            <div><dt>Problema</dt><dd>${esc(proj.problem)}</dd></div>
+            <div><dt>Solución</dt><dd>${esc(proj.solution)}</dd></div>
+            <div class="is-result"><dt>Resultado</dt><dd>${esc(proj.result)}</dd></div>
+          </dl>
+          ${stackList(proj.stack)}
+          ${projectLinks(proj.links, proj.note)}
+        </div>
+      </article>`;
+  }
+
+  function compactVisual(v, name) {
+    if (!v) return "";
+    if (v.type === "image") return shot(v, name);
+    if (v.type === "snippet") {
+      return `
+        <div class="frame">
+          ${frameBar(v.title)}
+          <pre class="snippet"><code>${list(v.lines, (l) => {
+            const line = esc(l) || " ";
+            return l.trim().startsWith("#") ? `<span class="c">${line}</span>\n` : `${line}\n`;
+          })}</code></pre>
+        </div>`;
+    }
+    if (v.type === "steps") {
+      return `
+        <div class="frame">
+          ${frameBar(v.title)}
+          <ol class="steps">${list(v.lines, (l) => `<li>${esc(l)}</li>`)}</ol>
+        </div>`;
+    }
+    return "";
+  }
+
+  function renderCompact(proj) {
+    return `
+      <article class="mini-card reveal" data-categories="${esc(proj.categories.join(" "))}">
+        ${compactVisual(proj.visual, proj.name)}
+        <div class="mini-body">
+          <div class="project-meta">
+            <span class="project-code">${esc(proj.code)}</span>
+            ${statusPill(proj.status)}
+          </div>
+          <h4>${esc(proj.name)}</h4>
+          <p class="project-summary">${esc(proj.summary)}</p>
+          <p class="mini-details">${esc(proj.details)}</p>
+          ${stackList(proj.stack)}
+          ${projectLinks(proj.links, proj.note)}
+        </div>
+      </article>`;
+  }
+
+  function renderProjects() {
+    const p = D.projects;
+    $("projects-kicker").textContent = p.kicker;
+    $("projects-title").textContent = p.title;
+    $("projects-lede").textContent = p.lede;
+
+    $("project-filters").innerHTML = list(
+      p.filters,
+      (f, i) => `
+        <button type="button" class="filter-chip" data-filter="${esc(f.id)}" aria-pressed="${i === 0}">
+          ${esc(f.label)}
+        </button>`
+    );
+
+    $("projects-featured").innerHTML = list(p.featured, renderFeatured);
+    $("projects-more").innerHTML = list(p.more, renderCompact);
+    if (!p.more || !p.more.length) $("more-title").hidden = true;
   }
 
   /* =========================== SOBRE MÍ =========================== */
   function renderAbout() {
     const a = D.about;
-    document.getElementById("about-kicker").textContent = a.kicker;
-    document.getElementById("about-title").textContent = a.title;
-
-    document.getElementById("about-paragraphs").innerHTML = a.paragraphs
-      .map((p) => `<p>${esc(p)}</p>`)
-      .join("");
-
-    document.getElementById("about-facts").innerHTML = a.facts
-      .map(
-        (f) => `
-        <div class="fact">
-          <span class="num">${esc(f.num)}</span>
-          <span class="label">${esc(f.label)}</span>
-        </div>`
-      )
-      .join("");
+    $("about-kicker").textContent = a.kicker;
+    $("about-title").textContent = a.title;
+    $("about-paragraphs").innerHTML = list(a.paragraphs, (p) => `<p>${esc(p)}</p>`);
+    $("principles-title").textContent = a.principlesTitle;
+    $("principles-list").innerHTML = list(
+      a.principles,
+      (x) => `<li><strong>${esc(x.title)}</strong><span>${esc(x.text)}</span></li>`
+    );
   }
 
   /* =========================== HABILIDADES =========================== */
   function renderSkills() {
     const s = D.skills;
-    document.getElementById("skills-kicker").textContent = s.kicker;
-    document.getElementById("skills-title").textContent = s.title;
-    document.getElementById("skills-lede").textContent = s.lede;
+    $("skills-kicker").textContent = s.kicker;
+    $("skills-title").textContent = s.title;
+    $("skills-lede").textContent = s.lede;
 
-    document.getElementById("skills-groups").innerHTML = s.groups
-      .map(
-        (g) => `
+    $("skills-groups").innerHTML = list(
+      s.groups,
+      (g) => `
         <div class="skill-group reveal">
           <h3>${esc(g.name)}</h3>
-          <div class="chip-row">
-            ${g.items.map((item) => `<span class="chip">${esc(item)}</span>`).join("")}
-          </div>
+          <ul class="chip-row">${list(g.items, (item) => `<li class="chip">${esc(item)}</li>`)}</ul>
+          ${g.evidence ? `<p class="evidence"><span aria-hidden="true">↳</span> ${esc(g.evidence)}</p>` : ""}
         </div>`
-      )
-      .join("");
+    );
   }
 
-  /* =========================== PROYECTOS =========================== */
-  function renderProjects() {
-    const p = D.projects;
-    document.getElementById("projects-kicker").textContent = p.kicker;
-    document.getElementById("projects-title").textContent = p.title;
-    document.getElementById("projects-lede").textContent = p.lede;
+  /* =========================== TRAYECTORIA =========================== */
+  function renderTrayectoria() {
+    const t = D.trayectoria;
+    const hasExp = t.experiencia && t.experiencia.length > 0;
+    $("trayectoria-kicker").textContent = t.kicker;
+    $("trayectoria-title").textContent = hasExp ? t.title : t.titleSoloFormacion;
 
-    // Filtros
-    document.getElementById("project-filters").innerHTML = p.filters
-      .map(
-        (f, i) => `
-        <button type="button" class="filter-chip${i === 0 ? " active" : ""}" data-filter="${esc(f.id)}">
-          ${esc(f.label)}
-        </button>`
-      )
-      .join("");
+    const column = (title, items) => `
+      <div class="timeline-col">
+        <h3>${esc(title)}</h3>
+        <ol class="timeline">
+          ${list(
+            items,
+            (item) => `
+            <li>
+              <span class="tl-year">${esc(item.year)}</span>
+              <div class="tl-body">
+                <div class="tl-name">${esc(item.name)}</div>
+                <div class="tl-org">${esc(item.org)}</div>
+                ${item.text ? `<p class="tl-text">${esc(item.text)}</p>` : ""}
+              </div>
+              ${item.tag ? `<span class="tl-tag">${esc(item.tag)}</span>` : ""}
+            </li>`
+          )}
+        </ol>
+      </div>`;
 
-    // Tarjetas de proyecto
-    document.getElementById("projects-list").innerHTML = p.items
-      .map((proj) => {
-        const roles = proj.roles
-          ? `<div class="roles-line">
-               ${proj.roles
-                 .map(
-                   (r) =>
-                     `<span class="role-pill ${esc(r.type)}">${esc(r.label)}</span>`
-                 )
-                 .join("")}
-             </div>`
-          : "";
-
-        const link = proj.link
-          ? `<a class="btn" href="${esc(proj.link)}" target="_blank" rel="noopener" style="margin-top:18px;">Ver código →</a>`
-          : "";
-
-        const table = proj.table
-          ? `<div class="module-table">
-               <div class="mt-head">
-                 <span>${esc(proj.table.headLeft)}</span>
-                 <span>${esc(proj.table.headRight)}</span>
-               </div>
-               ${proj.table.rows
-                 .map(
-                   (row) => `
-                 <div class="module-row">
-                   <div class="mod-name">${row.icon ? esc(row.icon) + " " : ""}${esc(row.name)}</div>
-                   <div class="mod-access">${esc(row.value)}</div>
-                 </div>`
-                 )
-                 .join("")}
-             </div>`
-          : "";
-
-        return `
-        <article class="project-card reveal" data-category="${esc(proj.category)}">
-          <div class="project-head">
-            <div>
-              <span class="project-code">${esc(proj.code)}</span>
-              <h3>${esc(proj.name)}</h3>
-            </div>
-            <span class="project-status">${esc(proj.status)}</span>
-          </div>
-          <div class="project-body">
-            <div class="project-desc">
-              ${proj.description.map((d) => `<p>${esc(d)}</p>`).join("")}
-              ${roles}
-              <div class="stack-line"><b>Stack:</b> ${esc(proj.stack)}</div>
-              ${link}
-            </div>
-            <div>${table}</div>
-          </div>
-        </article>`;
-      })
-      .join("");
-  }
-
-  /* =========================== FORMACIÓN =========================== */
-  function renderFormacion() {
-    const f = D.formacion;
-    document.getElementById("formacion-kicker").textContent = f.kicker;
-    document.getElementById("formacion-title").textContent = f.title;
-    document.getElementById("formacion-lede").textContent = f.lede;
-
-    document.getElementById("formacion-list").innerHTML = f.items
-      .map(
-        (item) => `
-        <div class="cert-item">
-          <span class="cert-year">${esc(item.year)}</span>
-          <div>
-            <div class="cert-name">${esc(item.name)}</div>
-            <div class="cert-org">${esc(item.org)}</div>
-          </div>
-          <span class="cert-tag">${esc(item.tag)}</span>
-        </div>`
-      )
-      .join("");
+    const cols = [];
+    if (hasExp) cols.push(column("Experiencia", t.experiencia));
+    if (t.formacion && t.formacion.length) cols.push(column("Formación", t.formacion));
+    const wrap = $("trayectoria-cols");
+    wrap.innerHTML = cols.join("");
+    wrap.classList.toggle("is-single", cols.length === 1);
   }
 
   /* =========================== CONTACTO =========================== */
   function renderContact() {
     const c = D.contact;
-    document.getElementById("contact-title").textContent = c.title;
-    document.getElementById("contact-text").textContent = c.text;
+    $("contact-title").textContent = c.title;
+    $("contact-text").textContent = c.text;
 
-    document.getElementById("contact-links").innerHTML = `
-      <a href="mailto:${esc(c.email)}" id="contact-email-link">
-        <span>Correo</span><span class="arrow">${esc(c.email)} →</span>
-      </a>
-      <a href="${esc(c.linkedin.url)}" target="_blank" rel="noopener">
-        <span>LinkedIn</span><span class="arrow">${esc(c.linkedin.label)} →</span>
-      </a>
-      <a href="${esc(c.github.url)}" target="_blank" rel="noopener">
-        <span>GitHub</span><span class="arrow">${esc(c.github.label)} →</span>
-      </a>
-      <a href="tel:${esc(c.phoneHref)}">
-        <span>Teléfono</span><span class="arrow">${esc(c.phoneDisplay)} →</span>
+    $("contact-actions").innerHTML = `
+      <a class="btn primary" href="mailto:${esc(c.email)}">${ICONS.mail} Escribirme un correo</a>
+      <button type="button" class="btn" id="copy-email">${ICONS.copy} Copiar correo</button>
+      ${D.hero.cv ? `<a class="btn" href="${esc(D.hero.cv)}" download>${ICONS.download} Descargar CV</a>` : ""}`;
+
+    const row = (icon, label, value, href, external) => `
+      <a href="${esc(href)}"${external ? ' target="_blank" rel="noopener"' : ""}>
+        <span class="cl-icon">${icon}</span>
+        <span class="cl-text"><span class="cl-label">${esc(label)}</span><span class="cl-value">${esc(value)}</span></span>
+        <span class="cl-arrow" aria-hidden="true">${ICONS.external}</span>
       </a>`;
+
+    $("contact-links").innerHTML = [
+      row(ICONS.mail, "Correo", c.email, `mailto:${c.email}`, false),
+      row(ICONS.linkedin, "LinkedIn", c.linkedin.label, c.linkedin.url, true),
+      row(ICONS.github, "GitHub", c.github.label, c.github.url, true),
+      row(ICONS.phone, "Teléfono", c.phoneDisplay, `tel:${c.phoneHref}`, false)
+    ].join("");
   }
 
   /* =========================== FOOTER =========================== */
   function renderFooter() {
-    document.getElementById("footer-text").textContent = D.footer.text;
+    const f = D.footer;
+    $("footer-copy").textContent = `© ${new Date().getFullYear()} ${f.name}`;
+    $("footer-made").innerHTML = `${esc(f.madeWith)}${
+      f.sourceUrl ? ` <a href="${esc(f.sourceUrl)}" target="_blank" rel="noopener">Ver el código</a>` : ""
+    }`;
   }
 
   /* =====================================================================
      INTERACTIVIDAD
      ===================================================================== */
 
-  // ---- Barra de progreso de lectura ----
-  function initScrollProgress() {
-    const bar = document.getElementById("scroll-progress");
-    if (!bar) return;
+  // ---- Aviso flotante ----
+  let toastTimer;
+  function showToast(msg) {
+    const toast = $("toast");
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.classList.add("visible");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("visible"), 2400);
+  }
+
+  // ---- Barra de progreso de lectura + botón "volver arriba" ----
+  function initScrollUi() {
+    const bar = $("scroll-progress");
+    const btn = $("back-to-top");
+    let ticking = false;
+
     const update = () => {
-      const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      bar.style.width = pct + "%";
+      const pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+      if (bar) bar.style.transform = `scaleX(${pct / 100})`;
+      if (btn) btn.classList.toggle("visible", window.scrollY > 700);
+      ticking = false;
     };
-    window.addEventListener("scroll", update, { passive: true });
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(update);
+        }
+      },
+      { passive: true }
+    );
     update();
+
+    if (btn) btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
   }
 
   // ---- Menú móvil ----
   function initMobileMenu() {
-    const toggle = document.getElementById("nav-toggle");
-    const menu = document.getElementById("mobile-menu");
+    const toggle = $("nav-toggle");
+    const menu = $("mobile-menu");
     if (!toggle || !menu) return;
 
-    toggle.addEventListener("click", () => {
-      const isOpen = menu.classList.toggle("is-open");
-      toggle.classList.toggle("is-open", isOpen);
-      toggle.setAttribute("aria-expanded", String(isOpen));
-    });
+    const setOpen = (open) => {
+      menu.classList.toggle("is-open", open);
+      toggle.classList.toggle("is-open", open);
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+    };
 
-    menu.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        menu.classList.remove("is-open");
-        toggle.classList.remove("is-open");
-        toggle.setAttribute("aria-expanded", "false");
-      });
+    toggle.addEventListener("click", () => setOpen(!menu.classList.contains("is-open")));
+    menu.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setOpen(false)));
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && menu.classList.contains("is-open")) {
+        setOpen(false);
+        toggle.focus();
+      }
     });
   }
 
@@ -274,92 +427,113 @@
   function initScrollSpy() {
     const sections = Array.from(document.querySelectorAll("main section[id]"));
     const navLinks = Array.from(document.querySelectorAll("nav.links a, .mobile-menu a"));
-    if (!sections.length || !navLinks.length) return;
+    if (!sections.length || !navLinks.length || !("IntersectionObserver" in window)) return;
+
+    const setActive = (id) => {
+      navLinks.forEach((link) => {
+        const active = link.getAttribute("href") === `#${id}`;
+        link.classList.toggle("active", active);
+        if (active) link.setAttribute("aria-current", "true");
+        else link.removeAttribute("aria-current");
+      });
+    };
+    const atBottom = () => window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    const lastId = sections[sections.length - 1].id;
 
     const spyObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const id = entry.target.getAttribute("id");
-            navLinks.forEach((link) => {
-              link.classList.toggle("active", link.getAttribute("href") === `#${id}`);
-            });
-          }
+          if (entry.isIntersecting && !atBottom()) setActive(entry.target.id);
         });
       },
       { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
     );
-
     sections.forEach((sec) => spyObserver.observe(sec));
-  }
 
-  // ---- Botón "volver arriba" ----
-  function initBackToTop() {
-    const btn = document.getElementById("back-to-top");
-    if (!btn) return;
-
-    window.addEventListener(
-      "scroll",
-      () => {
-        btn.classList.toggle("visible", window.scrollY > 600);
-      },
-      { passive: true }
-    );
-
-    btn.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
+    // La última sección es corta y nunca cruza la mitad de la pantalla:
+    // al llegar al final de la página se marca directamente.
+    window.addEventListener("scroll", () => { if (atBottom()) setActive(lastId); }, { passive: true });
   }
 
   // ---- Copiar correo al portapapeles ----
   function initCopyEmail() {
-    const link = document.getElementById("contact-email-link");
-    const toast = document.getElementById("copy-toast");
-    if (!link || !toast) return;
+    const btn = $("copy-email");
+    if (!btn) return;
+    const email = D.contact.email;
 
-    link.addEventListener("click", (e) => {
-      const email = D.contact.email;
-      if (!navigator.clipboard) return; // deja el mailto: normal como respaldo
-
-      e.preventDefault();
+    btn.addEventListener("click", () => {
+      if (!navigator.clipboard) {
+        showToast(email);
+        return;
+      }
       navigator.clipboard
         .writeText(email)
-        .then(() => {
-          toast.textContent = "Correo copiado: " + email;
-          toast.classList.add("visible");
-          setTimeout(() => toast.classList.remove("visible"), 2200);
-          // Además de copiar, abre el cliente de correo
-          window.location.href = "mailto:" + email;
-        })
-        .catch(() => {
-          window.location.href = "mailto:" + email;
-        });
+        .then(() => showToast("Correo copiado: " + email))
+        .catch(() => showToast(email));
     });
   }
 
   // ---- Filtro de proyectos ----
   function initProjectFilters() {
-    const filterBar = document.getElementById("project-filters");
-    const cards = () => Array.from(document.querySelectorAll(".project-card"));
+    const filterBar = $("project-filters");
     if (!filterBar) return;
+    const cards = Array.from(document.querySelectorAll("[data-categories]"));
+    const moreTitle = $("more-title");
+    const empty = $("projects-empty");
 
     filterBar.addEventListener("click", (e) => {
       const btn = e.target.closest(".filter-chip");
       if (!btn) return;
 
-      filterBar.querySelectorAll(".filter-chip").forEach((c) => c.classList.remove("active"));
-      btn.classList.add("active");
+      filterBar.querySelectorAll(".filter-chip").forEach((c) => c.setAttribute("aria-pressed", String(c === btn)));
 
       const filter = btn.getAttribute("data-filter");
-      cards().forEach((card) => {
-        const match = filter === "all" || card.getAttribute("data-category") === filter;
+      let visibleMore = 0;
+      let visibleAll = 0;
+      cards.forEach((card) => {
+        const match = filter === "all" || card.getAttribute("data-categories").split(" ").includes(filter);
         card.classList.toggle("is-hidden", !match);
+        if (match) {
+          card.classList.add("in-view");
+          visibleAll++;
+          if (card.classList.contains("mini-card")) visibleMore++;
+        }
       });
+      if (moreTitle && D.projects.more && D.projects.more.length) moreTitle.hidden = visibleMore === 0;
+      if (empty) empty.hidden = visibleAll > 0;
+    });
+  }
+
+  // ---- Visor ampliado de capturas ----
+  function initLightbox() {
+    const dialog = $("lightbox");
+    if (!dialog || typeof dialog.showModal !== "function") return;
+    const img = $("lightbox-img");
+    const caption = $("lightbox-caption");
+
+    document.addEventListener("click", (e) => {
+      const trigger = e.target.closest("[data-lightbox]");
+      if (!trigger) return;
+      img.src = trigger.getAttribute("data-lightbox");
+      img.alt = trigger.getAttribute("data-alt") || "";
+      caption.textContent = img.alt;
+      dialog.showModal();
+    });
+
+    dialog.querySelector(".lightbox-close").addEventListener("click", () => dialog.close());
+    // Cierra al hacer clic fuera de la imagen
+    dialog.addEventListener("click", (e) => {
+      if (e.target === dialog) dialog.close();
     });
   }
 
   // ---- Animación de aparición al hacer scroll ----
   function initReveal() {
+    const els = document.querySelectorAll(".reveal");
+    if (!("IntersectionObserver" in window)) {
+      els.forEach((el) => el.classList.add("in-view"));
+      return;
+    }
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -369,17 +543,9 @@
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
     );
-
-    document.querySelectorAll(".reveal, .project-card").forEach((el) => observer.observe(el));
-  }
-
-  // ---- Año automático en el footer (si se usa) ----
-  function initYear() {
-    document.querySelectorAll("[data-current-year]").forEach((el) => {
-      el.textContent = new Date().getFullYear();
-    });
+    els.forEach((el) => observer.observe(el));
   }
 
   /* =====================================================================
@@ -388,21 +554,20 @@
   function init() {
     renderMeta();
     renderHero();
+    renderProjects();
     renderAbout();
     renderSkills();
-    renderProjects();
-    renderFormacion();
+    renderTrayectoria();
     renderContact();
     renderFooter();
 
-    initScrollProgress();
+    initScrollUi();
     initMobileMenu();
     initScrollSpy();
-    initBackToTop();
     initCopyEmail();
     initProjectFilters();
+    initLightbox();
     initReveal();
-    initYear();
   }
 
   if (document.readyState === "loading") {

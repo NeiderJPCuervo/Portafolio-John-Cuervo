@@ -1,195 +1,338 @@
-
+/* =====================================================================
+   DATA.JS — TODO EL CONTENIDO DEL PORTAFOLIO VIVE AQUÍ
+   =====================================================================
+   Para actualizar tu portafolio solo edita este archivo. script.js lo
+   lee y construye la página. Reglas rápidas:
+   - Los textos van entre comillas.
+   - Si un campo dice null, esa parte simplemente no se muestra.
+   - Para agregar un elemento a una lista, copia un bloque { ... } completo,
+     pégalo con una coma antes y edita sus valores.
+   ===================================================================== */
 
 window.PORTFOLIO_DATA = {
 
   /* -------------------- 0. DATOS GENERALES / SEO -------------------- */
   meta: {
-    siteTitle: "John Neider Cuervo Quintero — Desarrollador de Sistemas",
-    siteDescription: "Portafolio de John Neider Cuervo Quintero, desarrollador de sistemas de gestión, inventario y punto de venta.",
-    navShortName: "J. CUERVO / DEV"
+    siteTitle: "John Neider Cuervo Quintero — Desarrollador de software y datos",
+    siteDescription: "Portafolio de John Neider Cuervo Quintero: estudiante de Ingeniería de Software y Datos en Medellín. Sistemas de inventario, punto de venta y dashboards de datos industriales.",
+    navName: "John Cuervo"
   },
 
   /* -------------------- 1. HERO -------------------- */
   hero: {
-    eyebrow: "Ficha de perfil · Disponible para nuevas oportunidades",
+    availability: "Disponible para prácticas y roles junior",
     nameLine1: "John Neider",
     nameLine2: "Cuervo Quintero",
-    role: "Estudiante de Ingeniería de Software y Datos",
-    pitch: "Estoy formándome en Ingeniería de Software y Datos y complemento mi formación construyendo sistemas reales: control de inventario, punto de venta y aplicaciones web. Me caracterizo por aprender con facilidad lo que un proyecto requiera y por trabajar en equipo para llegar a las mejores decisiones técnicas.",
+    headline: "Construyo software para problemas reales de operación: control de inventario, puntos de venta y dashboards que convierten datos de planta en decisiones.",
+    roleLine: "Estudiante de Ingeniería de Software y Datos · IU Digital de Antioquia",
+
+    // Foto de perfil (cuadrada). Pon null para mostrar tus iniciales.
+    photo: "assets/john-cuervo.jpg",
+
+    // Hoja de vida: guarda tu PDF como cv.pdf en esta carpeta y cambia null
+    // por "cv.pdf". Aparecerá un botón "Descargar CV" en el menú y el hero.
+    cv: null,
+
     primaryCta: { label: "Ver proyectos", href: "#proyectos" },
-    secondaryCta: { label: "Escribirme", href: "#contacto" },
+    secondaryCta: { label: "Contactarme", href: "#contacto" },
 
     // Ficha lateral tipo "registro de inventario"
     idCard: {
+      code: "REG · JNCQ-2026",
       estado: "Disponible",
       campos: [
-        { k: "Rol", v: "Estudiante de Ingeniería de Software y Datos" },
-        { k: "Enfoque", v: "Desarrollo de software & gestión de datos" },
-        { k: "Stack principal", v: "Python · SQL · HTML/CSS/JS · PyQt6" },
-        { k: "Proyectos activos", v: "3 proyectos en portafolio" },
-        { k: "Ubicación", v: "Medellin, Antioquia" }
+        { k: "Busco", v: "Práctica profesional o rol junior en software / datos" },
+        { k: "Stack", v: "Python · SQL · JavaScript · React" },
+        { k: "En producción", v: "Control de mercancía en la empresa donde trabajo" },
+        { k: "Ubicación", v: "Medellín, Colombia" }
       ]
     }
   },
 
-  /* -------------------- 2. SOBRE MÍ -------------------- */
-  about: {
-    kicker: "01 · Sobre mí",
-    paragraphs: [
-      "Soy John Neider Cuervo Quintero,Me encuentro en una etapa de formación en la que combino los fundamentos teóricos de mi carrera con la construcción de proyectos reales, con el propósito de consolidar buenas prácticas de desarrollo  en las áreas de software y gestión de datos.",
-      "Me caracterizo por tener disposición y facilidad para aprender cualquier tecnología o herramienta que un proyecto requiera, así como por un fuerte enfoque en el trabajo en equipo, entendiendo que las mejores soluciones de software surgen del intercambio de ideas y de decisiones tomadas de manera colaborativa.",
-      "He aplicado estos principios en proyectos como un sistema de control de inventario, un punto de venta para una ferretería y una aplicación web interactiva, buscando siempre que la solución sea funcional, ordenada y agradable de usar para la persona que está al otro lado de la pantalla."
-    ],
-    // Tarjetas de datos destacados (grid 2x2)
-    facts: [
-      { num: "03", label: "Proyectos construidos de principio a fin" },
-      { num: "3",  label: "Tecnologías principales: Python, SQL y JavaScript" },
-      { num: "6",  label: "Módulos integrados en un solo sistema (POS ferretería)" },
-      { num: "100%", label: "Disposición para aprender y trabajar en equipo" }
-    ]
-  },
+  /* Cifras bajo el hero. Usa solo datos verificables en tus proyectos. */
+  highlights: [
+    { num: "1", label: "sistema en producción dentro de la empresa donde trabajo" },
+    { num: "34", label: "señales de sensores organizadas en un dashboard industrial" },
+    { num: "489", label: "paros de planta detectados automáticamente en 4 meses de datos" },
+    { num: "6", label: "módulos con roles y permisos en el POS de ferretería" }
+  ],
 
-  /* -------------------- 3. HABILIDADES TÉCNICAS -------------------- */
-  skills: {
-    kicker: "02 · Habilidades técnicas",
-    title: "Con qué construyo",
-    lede: "Herramientas y lenguajes que uso en el día a día para pasar de una necesidad de negocio a un sistema funcionando.",
-    // Cada grupo es una tarjeta. Agrega o quita chips en "items".
-    groups: [
-      {
-        name: "Lenguajes & POO",
-        items: ["Python", "Programación orientada a objetos", "SQL"]
-      },
-      {
-        name: "Interfaces gráficas",
-        items: ["Tkinter", "PyQt6", "Diseño de UI de escritorio"]
-      },
-      {
-        name: "Datos & persistencia",
-        items: ["Diseño de bases de datos", "SQLite / MySQL", "Control de stock e inventario"]
-      },
-      {
-        name: "Prácticas & herramientas",
-        items: ["Git & GitHub", "Roles y permisos de usuario", "Reportes & KPIs"]
-      }
-    ]
-  },
-
-  /* -------------------- 4. PROYECTOS -------------------- */
+  /* -------------------- 2. PROYECTOS -------------------- */
   projects: {
-    kicker: "03 · Proyectos",
-    title: "Sistemas en producción",
-    lede: "Dos fichas, dos problemas reales: que la mercancía no se pierda, y que una ferretería pueda vender, controlar stock y ver sus números desde un solo lugar.",
+    kicker: "01 · Proyectos",
+    title: "Proyectos destacados",
+    lede: "Cada proyecto parte de un problema concreto. En cada uno cuento qué había que resolver, cómo lo construí y qué resultado dio.",
 
-    // Categorías para el filtro. "all" siempre debe existir.
+    // Categorías del filtro. "all" siempre debe existir.
     filters: [
       { id: "all", label: "Todos" },
-      { id: "inventario", label: "Inventario" },
-      { id: "pos", label: "Punto de venta" },
+      { id: "gestion", label: "Software de gestión" },
+      { id: "datos", label: "Datos" },
       { id: "web", label: "Web" }
     ],
 
-    items: [
+    /* Proyectos grandes, en formato caso de estudio.
+       status.tone: "green" (en producción), "blue" (demo), "gray" (finalizado), "violet" (académico)
+       visual: usa "image" si tienes captura; si no, "table" dibuja una ventana con módulos. */
+    featured: [
       {
-        code: "INV-001 / SISTEMA INTERNO",
-        name: "Gestión de Mercancía",
-        status: "En producción",
-        category: "inventario", // debe coincidir con un id de "filters"
-        description: [
-          "Sistema desarrollado para la empresa donde trabajo, orientado a registrar toda la mercancía de materia prima que ingresa y sale de la cava. Antes de este sistema, el control era manual y propenso a errores; ahora cada movimiento queda registrado, lo que evita pérdidas de mercancía y da trazabilidad completa sobre qué entró, qué salió y cuándo.",
-          "El foco estuvo en que el registro fuera rápido de usar para el personal de bodega, sin sacrificar el control que necesita administración para auditar el inventario en cualquier momento."
+        code: "DASH-01",
+        type: "Dashboard web · Datos industriales",
+        name: "Monitoreo de planta hidratadora de cal",
+        status: { label: "Demo funcional", tone: "blue" },
+        categories: ["datos", "web"],
+        summary: "Dashboard que convierte cuatro meses de lecturas de sensores en KPIs, alarmas y una línea de tiempo de paros.",
+        problem: "Las lecturas de mayo a agosto de la planta estaban repartidas en archivos Excel mensuales. Era imposible ver de un vistazo cuándo se detuvo la planta o qué equipo superó sus límites.",
+        solution: "Un script ETL en Node.js lee los Excel, normaliza 34 señales y precalcula promedios diarios, horarios y KPIs por mes. El frontend en React + Recharts organiza las señales en 7 áreas del proceso, con umbrales de alarma y filtro por mes.",
+        result: "489 paros detectados automáticamente (836,9 h de planta detenida) y una disponibilidad global de 71,6 %, todo visible en una sola pantalla.",
+        decisions: [
+          "Un paro se detecta cuando pasan más de 15 minutos sin lecturas: una regla simple y fácil de explicar al equipo de operación.",
+          "Los agregados se calculan una sola vez en el ETL, no en el navegador, para que las gráficas respondan rápido al cambiar de mes.",
+          "Mapeo explícito de los códigos de sensor (ej. TT 411201) a nombres legibles, para que el código sea fácil de mantener."
         ],
-        stack: "Python · SQL · Control de inventario en tiempo real",
-        // Tabla pequeña de funciones (opcional)
+        stack: ["React", "Vite", "Recharts", "Node.js", "SheetJS (xlsx)"],
+        image: {
+          src: "assets/projects/dashboard-planta.png",
+          alt: "Dashboard de la planta: tarjetas de disponibilidad, paros y alarmas, línea de tiempo de estado operativo y gráficas de temperatura por etapa.",
+          width: 1440,
+          height: 900,
+          frameTitle: "planta-hidratadora · mayo–agosto"
+        },
+        table: null,
+        roles: null,
+        links: {
+          code: "https://github.com/NeiderJPCuervo/DASHBOARD-DEMO",
+          demo: null // pon aquí la URL de Netlify cuando publiques el dashboard
+        },
+        note: null
+      },
+      {
+        code: "INV-02",
+        type: "Sistema interno · Inventario",
+        name: "Gestión de mercancía en cava",
+        status: { label: "En producción", tone: "green" },
+        categories: ["gestion", "datos"],
+        summary: "Registro de entradas y salidas de materia prima que reemplazó el control manual en la empresa donde trabajo.",
+        problem: "El control de la materia prima que entraba y salía de la cava era manual: había errores, se perdía mercancía y no existía forma de auditar qué había pasado.",
+        solution: "Desarrollé un sistema en Python con base de datos SQL donde cada ingreso y cada salida quedan registrados, con trazabilidad completa de qué entró, qué salió y cuándo.",
+        result: "Hoy lo usa el personal de bodega, y administración puede auditar el inventario real en cualquier momento.",
+        decisions: [
+          "Prioricé que registrar un movimiento fuera rápido: si es lento, el personal de bodega deja de usarlo.",
+          "Cada movimiento queda guardado con su fecha, así el historial sirve para auditar y no solo para consultar el stock."
+        ],
+        stack: ["Python", "SQL", "Control de inventario"],
+        image: null,
         table: {
+          frameTitle: "gestion_mercancia",
           headLeft: "Función",
           headRight: "Beneficio",
           rows: [
             { icon: "📥", name: "Registro de ingreso", value: "Sin pérdidas" },
             { icon: "📤", name: "Registro de salida", value: "Trazabilidad" },
-            { icon: "🧊", name: "Control de cava", value: "Stock real" }
+            { icon: "🧊", name: "Control de cava", value: "Stock real" },
+            { icon: "🔎", name: "Historial de movimientos", value: "Auditoría" }
           ]
         },
-        roles: null, // este proyecto no maneja roles, por eso va vacío
-        link: null   // pon aquí la URL de GitHub si el proyecto es público, ej: "https://github.com/tu-usuario/gestion-mercancia"
+        roles: null,
+        links: { code: null, demo: null },
+        note: "Código privado: es un sistema interno de la empresa."
       },
       {
-        code: "POS-002 / SISTEMA DE ESCRITORIO",
-        name: "Sistema POS para Ferretería",
-        status: "Finalizado",
-        category: "pos",
-        description: [
-          "Sistema de escritorio completo para gestionar productos, inventario y ventas de una ferretería, disponible en dos interfaces gráficas: Tkinter (incluida en Python) y PyQt6 (moderna y estilizada), para adaptarse a distintos equipos y preferencias visuales.",
-          "Construido con roles diferenciados, para que cada persona vea exactamente lo que necesita para hacer su trabajo, ni más ni menos."
+        code: "POS-03",
+        type: "App de escritorio · Punto de venta",
+        name: "Sistema POS para ferretería",
+        status: { label: "Finalizado", tone: "gray" },
+        categories: ["gestion"],
+        summary: "Aplicación de escritorio para vender, controlar el stock y revisar los números de una ferretería desde un solo lugar.",
+        problem: "Una ferretería necesita vender, controlar su inventario y revisar sus números en un solo lugar, con permisos distintos para el administrador y los vendedores.",
+        solution: "App en Python con SQLite y 6 módulos: productos, categorías, inventario con alertas de reposición, ventas con carrito, reportes con KPIs y gestión de usuarios.",
+        result: "Cada rol ve solo lo que necesita: el administrador accede a todo y el vendedor solo a ventas e inventario en modo lectura.",
+        decisions: [
+          "Contraseñas guardadas como hash SHA-256, nunca en texto plano.",
+          "Dos interfaces con la misma funcionalidad: Tkinter, que viene incluida con Python, y PyQt6, más moderna.",
+          "Permisos por rol: cada persona ve exactamente los módulos que necesita para su trabajo."
         ],
-        stack: "Python · Tkinter · PyQt6 · SQL",
+        stack: ["Python", "SQLite", "Tkinter", "PyQt6"],
+        image: null,
         table: {
+          frameTitle: "ferreteria_gui.py",
           headLeft: "Módulo",
           headRight: "Acceso",
           rows: [
             { icon: "📦", name: "Productos", value: "Admin" },
-            { icon: "⚙",  name: "Categorías", value: "Admin" },
-            { icon: "🗂",  name: "Inventario", value: "Admin / Vendedor" },
+            { icon: "⚙", name: "Categorías", value: "Admin" },
+            { icon: "🗂", name: "Inventario", value: "Admin / Vendedor" },
             { icon: "🧾", name: "Ventas", value: "Admin / Vendedor" },
             { icon: "📊", name: "Reportes", value: "Admin" },
             { icon: "👤", name: "Usuarios", value: "Admin" }
           ]
         },
         roles: [
-          { type: "admin",  label: "admin → acceso completo a todos los módulos" },
+          { type: "admin", label: "admin → todos los módulos" },
           { type: "vendor", label: "vendedor → ventas + inventario (lectura)" }
         ],
-        link: "https://github.com/NeiderJPCuervo/Sistema-de-Inventario-Ferre.git"
-      },
+        links: {
+          code: "https://github.com/NeiderJPCuervo/Sistema-de-Inventario-Ferre",
+          demo: null
+        },
+        note: null
+      }
+    ],
+
+    /* Proyectos más pequeños, en tarjetas compactas.
+       visual: "image" (captura), "snippet" (líneas de código reales) o "steps" (fases). */
+    more: [
       {
-        code: "WEB-003 / APLICACIÓN WEB",
-        name: "Amigo Secreto",
-        status: "Finalizado",
-        category: "web",
-        description: [
-          "Aplicación web diseñada para realizar sorteos rápidos o dinámicas como el \"Amigo Secreto\". Permite a los usuarios registrar nombres de forma iterativa, visualizarlos en tiempo real y ejecutar un motor de selección aleatoria para escoger un ganador.",
-          "El desarrollo se centró en garantizar una experiencia de usuario fluida y sin errores de entrada, validando cada nombre antes de agregarlo a la lista y ofreciendo una interfaz simple, clara e inmediata."
-        ],
-        stack: "HTML · CSS · JavaScript",
-        table: {
-          headLeft: "Función",
-          headRight: "Detalle",
-          rows: [
-            { icon: "📝", name: "Registro iterativo de nombres", value: "Validado" },
-            { icon: "👀", name: "Visualización en tiempo real", value: "Lista dinámica" },
-            { icon: "🎲", name: "Motor de selección aleatoria", value: "Un ganador" }
+        code: "SIM-04",
+        name: "Simulación de colas bancarias",
+        status: { label: "Finalizado", tone: "gray" },
+        categories: ["datos"],
+        summary: "Modelo Monte Carlo que compara configuraciones de cajeros para reducir la espera de los clientes de un banco.",
+        details: "Simula una jornada de 8 horas con 10 réplicas, llegadas y servicios exponenciales, y dos tipos de transacción con cuatro velocidades de atención. Calcula la espera en cola (Wq) y la utilización (ρ), y recomienda agregar cajeros si Wq > 5 min o ρ > 85 %.",
+        stack: ["Python", "NumPy", "pandas", "Monte Carlo"],
+        visual: {
+          type: "snippet",
+          title: "simu2.py",
+          lines: [
+            "# ¿Se necesita un nuevo cajero?",
+            "# Umbral: Wq > 5 min o ρ > 0.85",
+            "necesario = overall_wait > 5.0 or rho > 0.85",
+            "",
+            "# Cajeros dedicados (retiros, pagos)",
+            "configs = [(1, 2), (2, 1)]"
           ]
         },
-        roles: null,
-        link: "https://github.com/NeiderJPCuervo/juego-del-amigo-secreto.git"
+        links: { code: "https://github.com/NeiderJPCuervo/Simulacion_Banco", demo: null }
+      },
+      {
+        code: "BIG-05",
+        name: "Big Data con Databricks",
+        status: { label: "Académico · en pareja", tone: "violet" },
+        categories: ["datos"],
+        summary: "Análisis de un dataset de calidad del aire de Kaggle en Databricks, resuelto en equipo de dos.",
+        details: "Diseñamos el esquema con StructType, cargamos los datos como tabla Delta en Unity Catalog y validamos su calidad (nulos, estadísticas, agrupaciones, top 10 de países) con PySpark y Spark SQL en paralelo, comparando ambos enfoques y sus planes de ejecución.",
+        stack: ["Databricks", "PySpark", "Spark SQL", "Delta Lake"],
+        visual: {
+          type: "steps",
+          title: "notebook · 5 fases",
+          lines: [
+            "Diseño del esquema",
+            "Configuración del entorno",
+            "Carga y tabla Delta",
+            "Validaciones Spark ⇄ SQL",
+            "Comparación de enfoques"
+          ]
+        },
+        links: { code: "https://github.com/NeiderJPCuervo/Actividad_2_BigData", demo: null }
+      },
+      {
+        code: "WEB-06",
+        name: "Amigo Secreto",
+        status: { label: "Finalizado", tone: "gray" },
+        categories: ["web"],
+        summary: "App web para sorteos rápidos: agrega nombres con validación, los muestra en vivo y elige uno al azar.",
+        details: "Validación de entradas vacías, lista que se actualiza en tiempo real y opción para reiniciar el juego. Construida sin librerías, con manipulación directa del DOM.",
+        stack: ["HTML", "CSS", "JavaScript"],
+        visual: {
+          type: "image",
+          src: "assets/projects/amigo-secreto.png",
+          alt: "Pantalla de Amigo Secreto con el campo para escribir nombres y los botones Sortear amigo y Reiniciar juego.",
+          width: 1280,
+          height: 800,
+          title: "amigo-secreto"
+        },
+        links: { code: "https://github.com/NeiderJPCuervo/juego-del-amigo-secreto", demo: null }
       }
-
-      /* Para agregar otro proyecto, copia un bloque { ... } completo
-         de arriba, pégalo aquí (con una coma antes) y edita sus valores. */
     ]
   },
 
-  /* -------------------- 5. CERTIFICACIONES / ESTUDIOS -------------------- */
-  formacion: {
-    kicker: "04 · Certificaciones & estudios",
-    title: "Formación",
-    lede: "Edita esta lista con tu formación real: programas, cursos y certificaciones. Deja el nombre exacto de la institución tal como aparece en tu certificado.",
-    items: [
+  /* -------------------- 3. SOBRE MÍ -------------------- */
+  about: {
+    kicker: "02 · Sobre mí",
+    title: "Aprendo construyendo cosas que alguien usa",
+    paragraphs: [
+      "Soy estudiante de Ingeniería de Software y Datos en la IU Digital de Antioquia. Estudio y trabajo al mismo tiempo, y esa combinación define cómo programo: primero entiendo el problema de la persona que va a usar el sistema y después elijo la herramienta.",
+      "Mi primer sistema en producción nació en mi trabajo: el control de la mercancía en la cava era manual y se perdía producto. Lo resolví con Python y SQL. Desde entonces he construido un punto de venta con roles para una ferretería, un dashboard industrial en React y análisis de datos con Python y Spark.",
+      "Aprendo rápido lo que un proyecto necesite y disfruto el trabajo en equipo: las mejores soluciones de software surgen del intercambio de ideas y de decisiones tomadas en conjunto."
+    ],
+    principlesTitle: "Cómo trabajo",
+    principles: [
+      { title: "Funcional primero", text: "Que resuelva el problema real: que la mercancía no se pierda, que la venta cuadre, que el paro se vea." },
+      { title: "Pensado para quien lo usa", text: "Interfaces claras para el personal de bodega o los vendedores, no para programadores." },
+      { title: "Aprendo lo que haga falta", text: "De Tkinter a PyQt6, de Python a React, de SQL a Spark, según lo pida el proyecto." },
+      { title: "Decisiones en equipo", text: "Prefiero discutir una decisión técnica con el equipo antes que tomarla a ciegas." }
+    ]
+  },
+
+  /* -------------------- 4. HABILIDADES -------------------- */
+  skills: {
+    kicker: "03 · Habilidades",
+    title: "Con qué construyo",
+    lede: "Cada habilidad está respaldada por al menos un proyecto de esta página.",
+    groups: [
+      {
+        name: "Lenguajes",
+        items: ["Python", "SQL", "JavaScript", "Java"],
+        evidence: "POS, inventario y simulación en Python · dashboard en JavaScript · POO en Java"
+      },
+      {
+        name: "Web & frontend",
+        items: ["HTML", "CSS", "React", "Vite", "Recharts"],
+        evidence: "Dashboard de planta · Amigo Secreto · este portafolio"
+      },
+      {
+        name: "Datos",
+        items: ["SQLite / MySQL", "pandas", "NumPy", "PySpark", "Spark SQL", "Databricks", "ETL"],
+        evidence: "ETL del dashboard · simulación bancaria · Big Data con Databricks"
+      },
+      {
+        name: "Escritorio",
+        items: ["Tkinter", "PyQt6", "Diseño de interfaces"],
+        evidence: "Sistema POS para ferretería"
+      },
+      {
+        name: "Buenas prácticas",
+        items: ["POO", "Diseño de bases de datos", "Roles y permisos", "Hash de contraseñas", "KPIs y reportes"],
+        evidence: "POS para ferretería · gestión de mercancía"
+      },
+      {
+        name: "Herramientas",
+        items: ["Git & GitHub", "Netlify", "PyCharm"],
+        evidence: "Todo mi código está en GitHub; este sitio se publica en Netlify"
+      }
+    ]
+  },
+
+  /* -------------------- 5. TRAYECTORIA -------------------- */
+  trayectoria: {
+    kicker: "04 · Trayectoria",
+    title: "Formación y experiencia",   // se usa cuando hay experiencia
+    titleSoloFormacion: "Formación",    // se usa mientras "experiencia" esté vacía
+
+    /* Experiencia laboral: si la agregas, aparece una columna nueva.
+       Ejemplo (copia, quita las barras // y edita):
+       { year: "2025 — Actual", name: "Tu cargo", org: "Nombre de la empresa", tag: "Actual",
+         text: "Desarrollé el sistema de gestión de mercancía que hoy usa la bodega." } */
+    experiencia: [],
+
+    formacion: [
       {
         year: "2024 — 2026",
-        name: "[ La Institución Universitaria Digital de Antioquia  ]",
-        org: "[ IU Digital de Antioquia]",
-        tag: "En curso"
-      },
+        name: "Ingeniería de Software y Datos",
+        org: "Institución Universitaria Digital de Antioquia (IU Digital)",
+        tag: "En curso",
+        text: null
+      }
+      /* Agrega aquí cursos o certificaciones con el mismo formato:
+         { year: "2025", name: "Nombre del curso", org: "Plataforma o institución", tag: "Certificado", text: null } */
     ]
   },
 
   /* -------------------- 6. CONTACTO -------------------- */
   contact: {
-    title: "Hablemos de tu próximo sistema",
-    text: "Si buscas a alguien que le dé orden y trazabilidad a la operación de tu equipo, con gusto conversamos. Respondo rápido.",
-    // El botón de correo tiene copiado al portapapeles automático (ver script.js)
-    email: "jhonlds155@gmail.com", // TODO: reemplaza por tu correo real
+    title: "¿Tienes una vacante o una práctica? Hablemos.",
+    text: "Busco una práctica profesional o un rol junior en desarrollo de software o datos, donde pueda aportar desde el primer día y seguir aprendiendo de un equipo con experiencia. Respondo rápido.",
+    email: "jhonlds155@gmail.com",
     linkedin: { label: "/in/john-neider-cuervo-quintero", url: "https://www.linkedin.com/in/john-neider-cuervo-quintero/" },
     github: { label: "/NeiderJPCuervo", url: "https://github.com/NeiderJPCuervo" },
     phoneDisplay: "+57 322 681 6736",
@@ -198,6 +341,8 @@ window.PORTFOLIO_DATA = {
 
   /* -------------------- 7. PIE DE PÁGINA -------------------- */
   footer: {
-    text: "© 2026 John Neider Cuervo Quintero — Ficha actualizada cada vez que aprendo algo nuevo."
+    name: "John Neider Cuervo Quintero",
+    madeWith: "Diseñado y programado a mano con HTML, CSS y JavaScript.",
+    sourceUrl: "https://github.com/NeiderJPCuervo/Portafolio-John-Cuervo"
   }
 };
