@@ -20,9 +20,11 @@ window.PORTFOLIO_DATA = {
 
   /* -------------------- 1. HERO -------------------- */
   hero: {
-    availability: "Disponible para prácticas y roles junior",
+    availability: "Disponible para trabajar",
     nameLine1: "John Neider",
     nameLine2: "Cuervo Quintero",
+    // Roles que se escriben y borran bajo el nombre. Pon [] para ocultar la línea.
+    roles: ["Desarrollador Python", "Analista de datos", "Frontend React"],
     headline: "Construyo software para problemas reales de operación: control de inventario, puntos de venta y dashboards que convierten datos de planta en decisiones.",
     roleLine: "Estudiante de Ingeniería de Software y Datos · IU Digital de Antioquia",
 
@@ -41,7 +43,7 @@ window.PORTFOLIO_DATA = {
       code: "REG · JNCQ-2026",
       estado: "Disponible",
       campos: [
-        { k: "Busco", v: "Práctica profesional o rol junior en software / datos" },
+        { k: "Busco", v: "Empleo en desarrollo de software / datos" },
         { k: "Stack", v: "Python · SQL · JavaScript · React" },
         { k: "En producción", v: "Control de mercancía en la empresa donde trabajo" },
         { k: "Ubicación", v: "Medellín, Colombia" }
@@ -54,7 +56,7 @@ window.PORTFOLIO_DATA = {
     { num: "1", label: "sistema en producción dentro de la empresa donde trabajo" },
     { num: "34", label: "señales de sensores organizadas en un dashboard industrial" },
     { num: "489", label: "paros de planta detectados automáticamente en 4 meses de datos" },
-    { num: "6", label: "módulos con roles y permisos en el POS de ferretería" }
+    { num: "5", label: "módulos en el punto de venta de ferretería, con ventas transaccionales" }
   ],
 
   /* -------------------- 2. PROYECTOS -------------------- */
@@ -88,12 +90,13 @@ window.PORTFOLIO_DATA = {
         decisions: [
           "Un paro se detecta cuando pasan más de 15 minutos sin lecturas: una regla simple y fácil de explicar al equipo de operación.",
           "Los agregados se calculan una sola vez en el ETL, no en el navegador, para que las gráficas respondan rápido al cambiar de mes.",
+          "Detección automática de sensores sin señal: cinco instrumentos llegaban planos en 0 y se marcan como \"Sin señal\" en vez de graficarse como si fueran datos reales.",
           "Mapeo explícito de los códigos de sensor (ej. TT 411201) a nombres legibles, para que el código sea fácil de mantener."
         ],
         stack: ["React", "Vite", "Recharts", "Node.js", "SheetJS (xlsx)"],
         image: {
           src: "assets/projects/dashboard-planta.png",
-          alt: "Dashboard de la planta: tarjetas de disponibilidad, paros y alarmas, línea de tiempo de estado operativo y gráficas de temperatura por etapa.",
+          alt: "Dashboard de la planta: tarjetas de disponibilidad, paros y alarmas, línea de tiempo de estado operativo, un sensor marcado como sin señal y gráficas de temperatura por etapa.",
           width: 1440,
           height: 900,
           frameTitle: "planta-hidratadora · mayo–agosto"
@@ -102,7 +105,7 @@ window.PORTFOLIO_DATA = {
         roles: null,
         links: {
           code: "https://github.com/NeiderJPCuervo/DASHBOARD-DEMO",
-          demo: null // pon aquí la URL de Netlify cuando publiques el dashboard
+          demo: "https://neiderjpcuervo.github.io/DASHBOARD-DEMO/"
         },
         note: null
       },
@@ -144,33 +147,29 @@ window.PORTFOLIO_DATA = {
         status: { label: "Finalizado", tone: "gray" },
         categories: ["gestion"],
         summary: "Aplicación de escritorio para vender, controlar el stock y revisar los números de una ferretería desde un solo lugar.",
-        problem: "Una ferretería necesita vender, controlar su inventario y revisar sus números en un solo lugar, con permisos distintos para el administrador y los vendedores.",
-        solution: "App en Python con SQLite y 6 módulos: productos, categorías, inventario con alertas de reposición, ventas con carrito, reportes con KPIs y gestión de usuarios.",
-        result: "Cada rol ve solo lo que necesita: el administrador accede a todo y el vendedor solo a ventas e inventario en modo lectura.",
+        problem: "Una ferretería pequeña necesita vender, saber qué tiene en bodega, cuándo reponer y cómo van sus números, sin depender de cuadernos ni hojas de cálculo.",
+        solution: "App en Python con Tkinter y SQLite organizada en 5 módulos: productos, categorías, inventario con alertas de reposición, ventas con carrito e historial, y reportes con KPIs del negocio. Incluye además una versión de consola del mismo sistema.",
+        result: "Cada venta descuenta el stock automáticamente y queda registrada con número correlativo (V-00001…), así el inventario siempre coincide con lo vendido.",
         decisions: [
-          "Contraseñas guardadas como hash SHA-256, nunca en texto plano.",
-          "Dos interfaces con la misma funcionalidad: Tkinter, que viene incluida con Python, y PyQt6, más moderna.",
-          "Permisos por rol: cada persona ve exactamente los módulos que necesita para su trabajo."
+          "La venta se guarda en una sola transacción: cabecera, detalle y descuento de stock se confirman juntos o se revierten si algo falla.",
+          "El carrito valida el stock disponible, contando lo que ya se agregó, antes de aceptar un producto.",
+          "La interfaz se adapta al DPI y al tamaño de fuente de cada pantalla, con barra lateral colapsable."
         ],
-        stack: ["Python", "SQLite", "Tkinter", "PyQt6"],
+        stack: ["Python", "SQLite", "Tkinter"],
         image: null,
         table: {
           frameTitle: "ferreteria_gui.py",
           headLeft: "Módulo",
-          headRight: "Acceso",
+          headRight: "Función",
           rows: [
-            { icon: "📦", name: "Productos", value: "Admin" },
-            { icon: "⚙", name: "Categorías", value: "Admin" },
-            { icon: "🗂", name: "Inventario", value: "Admin / Vendedor" },
-            { icon: "🧾", name: "Ventas", value: "Admin / Vendedor" },
-            { icon: "📊", name: "Reportes", value: "Admin" },
-            { icon: "👤", name: "Usuarios", value: "Admin" }
+            { icon: "📦", name: "Productos", value: "Alta, precios y stock" },
+            { icon: "⚙", name: "Categorías", value: "Familias de producto" },
+            { icon: "🗂", name: "Inventario", value: "Alertas de reposición" },
+            { icon: "🧾", name: "Ventas", value: "Carrito e historial" },
+            { icon: "📊", name: "Reportes", value: "KPIs y críticos" }
           ]
         },
-        roles: [
-          { type: "admin", label: "admin → todos los módulos" },
-          { type: "vendor", label: "vendedor → ventas + inventario (lectura)" }
-        ],
+        roles: null,
         links: {
           code: "https://github.com/NeiderJPCuervo/Sistema-de-Inventario-Ferre",
           demo: null
@@ -188,7 +187,7 @@ window.PORTFOLIO_DATA = {
         status: { label: "Finalizado", tone: "gray" },
         categories: ["datos"],
         summary: "Modelo Monte Carlo que compara configuraciones de cajeros para reducir la espera de los clientes de un banco.",
-        details: "Simula una jornada de 8 horas con 10 réplicas, llegadas y servicios exponenciales, y dos tipos de transacción con cuatro velocidades de atención. Calcula la espera en cola (Wq) y la utilización (ρ), y recomienda agregar cajeros si Wq > 5 min o ρ > 85 %.",
+        details: "Simula una jornada de 8 horas con 10 réplicas, llegadas y servicios exponenciales, y dos tipos de transacción con cuatro velocidades de atención. Calcula la espera en cola (Wq) y la utilización de los cajeros (ρ = λ/cμ), y recomienda agregar cajeros si Wq > 5 min o ρ > 85 %.",
         stack: ["Python", "NumPy", "pandas", "Monte Carlo"],
         visual: {
           type: "snippet",
@@ -241,7 +240,7 @@ window.PORTFOLIO_DATA = {
           height: 800,
           title: "amigo-secreto"
         },
-        links: { code: "https://github.com/NeiderJPCuervo/juego-del-amigo-secreto", demo: null }
+        links: { code: "https://github.com/NeiderJPCuervo/juego-del-amigo-secreto", demo: "https://neiderjpcuervo.github.io/juego-del-amigo-secreto/" }
       }
     ]
   },
@@ -252,14 +251,14 @@ window.PORTFOLIO_DATA = {
     title: "Aprendo construyendo cosas que alguien usa",
     paragraphs: [
       "Soy estudiante de Ingeniería de Software y Datos en la IU Digital de Antioquia. Estudio y trabajo al mismo tiempo, y esa combinación define cómo programo: primero entiendo el problema de la persona que va a usar el sistema y después elijo la herramienta.",
-      "Mi primer sistema en producción nació en mi trabajo: el control de la mercancía en la cava era manual y se perdía producto. Lo resolví con Python y SQL. Desde entonces he construido un punto de venta con roles para una ferretería, un dashboard industrial en React y análisis de datos con Python y Spark.",
+      "Mi primer sistema en producción nació en mi trabajo: el control de la mercancía en la cava era manual y se perdía producto. Lo resolví con Python y SQL. Desde entonces he construido un punto de venta para una ferretería, un dashboard industrial en React y análisis de datos con Python y Spark.",
       "Aprendo rápido lo que un proyecto necesite y disfruto el trabajo en equipo: las mejores soluciones de software surgen del intercambio de ideas y de decisiones tomadas en conjunto."
     ],
     principlesTitle: "Cómo trabajo",
     principles: [
       { title: "Funcional primero", text: "Que resuelva el problema real: que la mercancía no se pierda, que la venta cuadre, que el paro se vea." },
       { title: "Pensado para quien lo usa", text: "Interfaces claras para el personal de bodega o los vendedores, no para programadores." },
-      { title: "Aprendo lo que haga falta", text: "De Tkinter a PyQt6, de Python a React, de SQL a Spark, según lo pida el proyecto." },
+      { title: "Aprendo lo que haga falta", text: "De Tkinter a React, de SQLite a Spark, según lo pida el proyecto." },
       { title: "Decisiones en equipo", text: "Prefiero discutir una decisión técnica con el equipo antes que tomarla a ciegas." }
     ]
   },
@@ -287,13 +286,13 @@ window.PORTFOLIO_DATA = {
       },
       {
         name: "Escritorio",
-        items: ["Tkinter", "PyQt6", "Diseño de interfaces"],
+        items: ["Tkinter", "Diseño de interfaces"],
         evidence: "Sistema POS para ferretería"
       },
       {
         name: "Buenas prácticas",
-        items: ["POO", "Diseño de bases de datos", "Roles y permisos", "Hash de contraseñas", "KPIs y reportes"],
-        evidence: "POS para ferretería · gestión de mercancía"
+        items: ["POO", "Diseño de bases de datos", "Transacciones SQL", "Calidad de datos", "KPIs y reportes"],
+        evidence: "POS para ferretería · gestión de mercancía · dashboard de planta"
       },
       {
         name: "Herramientas",
@@ -330,8 +329,8 @@ window.PORTFOLIO_DATA = {
 
   /* -------------------- 6. CONTACTO -------------------- */
   contact: {
-    title: "¿Tienes una vacante o una práctica? Hablemos.",
-    text: "Busco una práctica profesional o un rol junior en desarrollo de software o datos, donde pueda aportar desde el primer día y seguir aprendiendo de un equipo con experiencia. Respondo rápido.",
+    title: "¿Tienes una vacante? Hablemos.",
+    text: "Busco empleo en desarrollo de software o datos, donde pueda aportar desde el primer día y seguir creciendo junto a un equipo con experiencia. Respondo rápido.",
     email: "jhonlds155@gmail.com",
     linkedin: { label: "/in/john-neider-cuervo-quintero", url: "https://www.linkedin.com/in/john-neider-cuervo-quintero/" },
     github: { label: "/NeiderJPCuervo", url: "https://github.com/NeiderJPCuervo" },

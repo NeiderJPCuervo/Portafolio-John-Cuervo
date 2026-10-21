@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://portafolio-john-cuervo.netlify.app/">
 <meta property="og:title" content="John Neider Cuervo Quintero — Desarrollador de software y datos">
-<meta property="og:description" content="Sistemas de inventario y punto de venta en Python, y dashboards de datos industriales en React. Disponible para prácticas y roles junior.">
+<meta property="og:description" content="Sistemas de inventario y punto de venta en Python, y dashboards de datos industriales en React. Disponible para trabajar.">
 <meta property="og:image" content="https://portafolio-john-cuervo.netlify.app/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -89,10 +89,17 @@
 
   <!-- ================= HERO ================= -->
   <section class="hero" aria-labelledby="hero-name">
+    <!-- Brillo que sigue al cursor (solo con mouse y sin "reducir movimiento") -->
+    <div class="hero-spot" aria-hidden="true"></div>
     <div class="wrap hero-grid">
       <div class="hero-copy">
         <span id="hero-availability" class="availability"></span>
         <h1 id="hero-name"><span id="hero-name-1">John Neider</span> <span id="hero-name-2">Cuervo Quintero</span></h1>
+        <p id="hero-typer" class="typer" hidden>
+          <span class="sr-only" id="hero-typer-label"></span>
+          <span class="typer-prompt" aria-hidden="true">&gt;</span>
+          <span class="typer-text" aria-hidden="true"></span><span class="typer-caret" aria-hidden="true"></span>
+        </p>
         <p id="hero-headline" class="headline"></p>
         <p id="hero-role" class="role-line"></p>
         <div id="hero-actions" class="hero-actions"></div>
@@ -216,6 +223,7 @@
 </noscript>
 
 <script src="data.js"></script>
+<script src="icons.js"></script>
 <script src="script.js"></script>
 
 </body>

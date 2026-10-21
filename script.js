@@ -48,6 +48,20 @@
     expand: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>'
   };
 
+  // Preferencias del visitante: sin animaciones extra si pidió reducir movimiento,
+  // y efectos de cursor solo con mouse (no en pantallas táctiles).
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  // Logo de una tecnología (icons.js). Si no hay logo, devuelve "" y queda solo el texto.
+  function techIcon(name) {
+    const icons = window.TECH_ICONS || {};
+    const aliases = window.TECH_ICON_ALIASES || {};
+    const icon = icons[aliases[String(name).toLowerCase()]];
+    if (!icon) return "";
+    return `<svg viewBox="0 0 24 24" aria-hidden="true" class="fill tech-icon" style="color:${esc(icon.color)}"><path d="${esc(icon.path)}"/></svg>`;
+  }
+
   /* =========================== META / SEO =========================== */
   function renderMeta() {
     document.title = D.meta.siteTitle;
@@ -100,9 +114,19 @@
       (f) => `<div class="id-field"><dt>${esc(f.k)}</dt><dd>${esc(f.v)}</dd></div>`
     );
 
+    // Roles que se escriben bajo el nombre; el texto completo queda para lectores de pantalla
+    if (h.roles && h.roles.length) {
+      $("hero-typer-label").textContent = h.roles.join(", ");
+      $("hero-typer").hidden = false;
+    }
+
+    // Las cifras enteras mayores que 1 llevan data-count para animarlas al aparecer
     $("highlights").innerHTML = list(
       D.highlights,
-      (x) => `<li><span class="num">${esc(x.num)}</span><span class="label">${esc(x.label)}</span></li>`
+      (x) => {
+        const count = /^\d+$/.test(String(x.num)) && Number(x.num) > 1 ? ` data-count="${esc(x.num)}"` : "";
+        return `<li><span class="num"${count}>${esc(x.num)}</span><span class="label">${esc(x.label)}</span></li>`;
+      }
     );
   }
 
@@ -116,7 +140,7 @@
 
   const statusPill = (s) => `<span class="status tone-${esc(s.tone)}">${esc(s.label)}</span>`;
 
-  const stackList = (items) => `<ul class="stack" aria-label="Tecnologías">${list(items, (t) => `<li>${esc(t)}</li>`)}</ul>`;
+  const stackList = (items) => `<ul class="stack" aria-label="Tecnologías">${list(items, (t) => `<li>${techIcon(t)}${esc(t)}</li>`)}</ul>`;
 
   function projectLinks(links, note) {
     const parts = [];
@@ -280,7 +304,7 @@
       (g) => `
         <div class="skill-group reveal">
           <h3>${esc(g.name)}</h3>
-          <ul class="chip-row">${list(g.items, (item) => `<li class="chip">${esc(item)}</li>`)}</ul>
+          <ul class="chip-row">${list(g.items, (item) => `<li class="chip">${techIcon(item)}${esc(item)}</li>`)}</ul>
           ${g.evidence ? `<p class="evidence"><span aria-hidden="true">↳</span> ${esc(g.evidence)}</p>` : ""}
         </div>`
     );
@@ -527,6 +551,105 @@
     });
   }
 
+  // ---- Roles que se escriben y se borran bajo el nombre ----
+  function initTyper() {
+    const roles = D.hero.roles || [];
+    const el = $("hero-typer");
+    if (!el || !roles.length) return;
+    const text = el.querySelector(".typer-text");
+
+    if (reduceMotion) {
+      text.textContent = roles.join(" · ");
+      el.classList.add("is-static");
+      return;
+    }
+
+    let role = 0;
+    let chars = 0;
+    let deleting = false;
+    const tick = () => {
+      const word = roles[role];
+      chars += deleting ? -1 : 1;
+      text.textContent = word.slice(0, chars);
+
+      let delay = deleting ? 38 : 80;
+      if (!deleting && chars === word.length) {
+        deleting = true;
+        delay = 1900;
+      } else if (deleting && chars === 0) {
+        deleting = false;
+        role = (role + 1) % roles.length;
+        delay = 380;
+      }
+      setTimeout(tick, delay);
+    };
+    setTimeout(tick, 700);
+  }
+
+  // ---- Cifras que cuentan desde 0 cuando aparecen en pantalla ----
+  function initCountUp() {
+    const nums = Array.from(document.querySelectorAll("[data-count]"));
+    if (!nums.length || reduceMotion || !("IntersectionObserver" in window)) return;
+
+    const animate = (el) => {
+      const target = Number(el.getAttribute("data-count"));
+      const duration = 1300;
+      const start = performance.now();
+      const step = (now) => {
+        const t = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = String(Math.round(target * eased));
+        if (t < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+
+    // El 0 se escribe en el primer cuadro de la animación: si no llega a correr,
+    // queda la cifra final. Arranca un poco antes de entrar en pantalla.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animate(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px 10% 0px" }
+    );
+    nums.forEach((el) => observer.observe(el));
+  }
+
+  // ---- Brillo del hero y bordes de tarjetas que siguen al cursor ----
+  function initPointerGlow() {
+    if (reduceMotion || !finePointer) return;
+
+    const hero = document.querySelector(".hero");
+    if (hero) {
+      let frame = 0;
+      hero.addEventListener("pointermove", (e) => {
+        if (frame) return;
+        frame = requestAnimationFrame(() => {
+          const rect = hero.getBoundingClientRect();
+          hero.style.setProperty("--gx", `${e.clientX - rect.left}px`);
+          hero.style.setProperty("--gy", `${e.clientY - rect.top}px`);
+          hero.classList.add("is-lit");
+          frame = 0;
+        });
+      });
+      hero.addEventListener("pointerleave", () => hero.classList.remove("is-lit"));
+    }
+
+    document.querySelectorAll(".project-card, .mini-card, .skill-group").forEach((card) => {
+      card.classList.add("spot");
+      card.addEventListener("pointermove", (e) => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty("--mx", `${e.clientX - rect.left}px`);
+        card.style.setProperty("--my", `${e.clientY - rect.top}px`);
+      });
+    });
+  }
+
   // ---- Animación de aparición al hacer scroll ----
   function initReveal() {
     const els = document.querySelectorAll(".reveal");
@@ -568,6 +691,9 @@
     initProjectFilters();
     initLightbox();
     initReveal();
+    initTyper();
+    initCountUp();
+    initPointerGlow();
   }
 
   if (document.readyState === "loading") {
